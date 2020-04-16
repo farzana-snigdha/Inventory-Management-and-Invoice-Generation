@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="OracleConnection" />
+        <module name="Inventory-Management-and-Invoice-Generation" />
       </profile>
     </annotationProcessing>
   </component>

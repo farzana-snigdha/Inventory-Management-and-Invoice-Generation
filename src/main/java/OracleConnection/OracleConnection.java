@@ -9,7 +9,7 @@ public class OracleConnection {
     static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
     static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
     static final String USER = "SYSTEM";
-    static final String PASS = "Test12345";
+    static final String PASS = "snigdha";
     Connection conn = null;
     Statement stmt = null;
 
@@ -18,9 +18,9 @@ public class OracleConnection {
 
         try {
             Class.forName(JDBC_DRIVER);
-            System.out.println("Connecting to database...");
+           // System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            System.out.println("Creating statement...");
+           // System.out.println("Creating statement...");
             stmt = conn.createStatement();
 
         } catch (SQLException se) {

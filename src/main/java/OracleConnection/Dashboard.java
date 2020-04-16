@@ -4,10 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.sql.*;
 import java.util.Vector;
 
@@ -34,26 +31,26 @@ public class Dashboard {
     private JLabel sellQuantityLabel;
     private JLabel sellDateLabel;
     private JTextField sellQuantityTextField, sellDateTextField;//sell
-    private JButton invoiceButton, sellSaveButton,sellAddButton;//sell
+    private JButton invoiceButton, sellSaveButton, sellAddButton, sellUpdateButton;//sell
 
     private JComboBox expenseComboBox;
     private JLabel expId, purpose, amount, date, description;//expense Paybills
     private JTextField tfExpId, tfAmount, tfDate, tfDescription;//expense Paybills
-    private JButton expSaveButton,expDelButton,expAddButton;
+    private JButton expSaveButton, expDelButton, expAddButton;
     private static String[] purposes = {"Select an option", "Employee Salary", "Rent", "Utility Bills", "Others"};//expense list.
 
     private JButton inventoryDeleteButton;//inventory
 
-    private JTable inventoryTable,sellTable,expTable;
-    private DefaultTableModel inventoryModel,sellModel,expModel;
-    private JScrollPane inventoryScrollPane,sellScrollPane,expScrollPane;
+    private JTable inventoryTable, sellTable, expTable;
+    private DefaultTableModel inventoryModel, sellModel, expModel;
+    private JScrollPane inventoryScrollPane, sellScrollPane, expScrollPane;
 
 
-    private String[] inventoryColumns = {"Id", "Name", "MRP","Quantity"};
+    private String[] inventoryColumns = {"Id", "Name", "MRP", "Quantity"};
     private String[] inventoryRows = new String[4];
-    private String[] sellColumns = {"Name", "Id", "MRP","Quantity","Date"};
+    private String[] sellColumns = {"Name", "Id", "MRP", "Quantity", "Date"};
     private String[] sellRows = new String[5];
-    private String[] expenseColumns = {"Purpose", "Id", "Amount","Date","Description"};
+    private String[] expenseColumns = {"Purpose", "Id", "Amount", "Date", "Description"};
     private String[] expenseRows = new String[5];
 
 
@@ -83,8 +80,6 @@ public class Dashboard {
     }
 
 
-
-
     private void initComponents() {
 
         mainPanel = new JPanel();
@@ -99,6 +94,7 @@ public class Dashboard {
         int xsize = (int) toolkit.getScreenSize().getWidth();
         int ysize = (int) toolkit.getScreenSize().getHeight();
         frame.setSize(xsize, ysize);
+
 
         tabbedPane = new JTabbedPane();
         tabbedPane.setBounds(0, 0, xsize, ysize);
@@ -182,10 +178,8 @@ public class Dashboard {
             inventoryTable.setSelectionBackground(Color.GRAY);
             inventoryTable.setRowHeight(30);
 
-            inventoryScrollPane.setBounds(150,350,1000,300);
+            inventoryScrollPane.setBounds(150, 350, 1000, 300);
             panelInventory.add(inventoryScrollPane);
-
-
 
 
         }
@@ -315,26 +309,43 @@ public class Dashboard {
 
 
                     try {
-                        String buyDate1 = buyDateTextField.getText();
-                        Date sqlBuyDate1 = Date.valueOf(buyDate1);
+
+                            OracleConnection oc2 = new OracleConnection();
+
+                            String sql = "select S_NAME FROM SUPPLY_ORDER where S_NAME='" + buyComboBox.getSelectedItem().toString() + "'";
+                            PreparedStatement ps1 = oc2.conn.prepareStatement(sql);
+                            ResultSet rs1 = ps1.executeQuery();
+                            if (rs1.next()) {
+                                quantityAdd();
+                                table_update_inventory();
+                            } else {
+
+                                String buyDate1 = buyDateTextField.getText();
+                                Date sqlBuyDate1 = Date.valueOf(buyDate1);
 
 
-                        String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE) values(?, ?, ?, ?, ?, ?)";
-                        ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER);
-                        ps.setString(1, buyComboBox.getSelectedItem().toString());
-                        ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
-                        ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
-                        ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
-                        ps.setString(5, buySupplierTextField.getText().trim());
-                        ps.setDate(6, sqlBuyDate1);
-                        ps.executeUpdate();
-                        table_update_inventory();
+                                String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE) values(?, ?, ?, ?, ?, ?)";
+                                ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER);
+                                ps.setString(1, buyComboBox.getSelectedItem().toString());
+                                ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
+                                ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
+                                ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
+                                ps.setString(5, buySupplierTextField.getText().trim());
+                                ps.setDate(6, sqlBuyDate1);
+                                ps.executeUpdate();
 
+                                table_update_inventory();
+
+                            }
                         buy_priceTextField.setText("");
                         buyQuantityTextField.setText("");
                         buyMRPTextField.setText("");
                         buySupplierTextField.setText("");
                         buyDateTextField.setText("");
+
+
+
+
 
                     } catch (Exception e2) {
                         System.out.println(e2);
@@ -345,6 +356,8 @@ public class Dashboard {
                             System.out.println(ex);
                         }
                     }
+
+
                 }
             });
 
@@ -430,6 +443,19 @@ public class Dashboard {
             sellDateTextField.setFont(f1);
             panelSell.add(sellDateTextField);
 
+            sellUpdateButton = new JButton("Update");
+            sellUpdateButton.setFont(f2);
+            sellUpdateButton.setBounds(350, 450, 100, 30);
+            sellUpdateButton.setBackground(new Color(0x7E0AB5));
+            sellUpdateButton.setForeground(new Color(0xFEFEFE));
+            panelSell.add(sellUpdateButton);
+            sellUpdateButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    sellTableQtyUpdate(e);
+                }
+            });
+
             sellAddButton = new JButton("Add");
             sellAddButton.setFont(f2);
             sellAddButton.setBounds(500, 450, 100, 30);
@@ -442,7 +468,7 @@ public class Dashboard {
                         String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID) values(?,?)";
                         PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
                         ps1.setInt(1, Integer.parseInt(sellQuantityTextField.getText()));
-                        ps1.setInt(2,Integer.parseInt(sellIdTextField.getText()));
+                        ps1.setInt(2, Integer.parseInt(sellIdTextField.getText()));
                         ps1.executeUpdate();
 
                         String sellDate = sellDateTextField.getText();
@@ -459,15 +485,40 @@ public class Dashboard {
                                 Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), date});
                         sellQuantityTextField.setText("");
 
+                        sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                                sellTableMouseClicked(evt);
+                            }
+                        });
+                        sellScrollPane.setViewportView(sellTable);
 
-                    } catch (Exception ex) {
-                        System.out.println(ex + " sellAddButton");
-                    }
+
+
+                        } catch (Exception e1) {
+                            System.out.println(e1);
+                        }
+//sellTableQtyUpdate(e);
+
+
 
                 }
             });
 
             panelSell.add(sellAddButton);
+
+
+        /*    sellTable.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int row = sellTable.getSelectedRow();
+                    DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+                    sellComboBox.setSelectedItem(d.getValueAt(row, 0).toString());
+                    sellIdTextField.setText(d.getValueAt(row, 1).toString());
+                    sellMRPTextField.setText(d.getValueAt(row, 2).toString());
+                    sellQuantityTextField.setText(d.getValueAt(row, 3).toString());
+                    sellDateTextField.setText(d.getValueAt(row, 4).toString());
+                }
+            });*/
 
 
             sellSaveButton = new JButton("Save");
@@ -528,7 +579,7 @@ public class Dashboard {
             sellTable.setSelectionBackground(Color.GRAY);
             sellTable.setRowHeight(30);
 
-            sellScrollPane.setBounds(150,610,1000,300);
+            sellScrollPane.setBounds(150, 610, 1000, 300);
             panelSell.add(sellScrollPane);
         }
 
@@ -573,6 +624,8 @@ public class Dashboard {
             tfDate = new JTextField();
             tfDate.setBounds(550, 310, 200, 30);
             tfDate.setFont(f1);
+
+            //      panelPayBills.add(datePicker);
             panelPayBills.add(tfDate);
 
             tfDescription = new JTextField();
@@ -607,6 +660,7 @@ public class Dashboard {
                         //date
                         String expDate = tfDate.getText();
                         Date sqlExpDate = Date.valueOf(expDate);
+                        // Date selectedDate = (Date) datePicker.getModel().getValue();
 
                         //purpose
                         String purpose = expenseComboBox.getSelectedItem().toString();
@@ -773,5 +827,70 @@ public class Dashboard {
         }
     }
 
+    private void quantityChange() {
+        int quantity = Integer.parseInt(sellQuantityTextField.getText());
+        String name = sellComboBox.getSelectedItem().toString();
+        try {
+            String sql = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY -? WHERE S_NAME = ? and S_QUANTITY > 0";
+            PreparedStatement ps1 = oc.conn.prepareStatement(sql);
+            ps1.setInt(1, quantity);
+            ps1.setString(2, name);
+            ps1.executeUpdate();
 
+
+        } catch (Exception e1) {
+            System.out.println(e1 + " quantityChange");
+        }
+
+    }
+
+    private void quantityAdd() {
+        try {
+            int quantity = Integer.parseInt(buyQuantityTextField.getText());
+            String name = buyComboBox.getSelectedItem().toString();
+            int mrp = Integer.parseInt(buyMRPTextField.getText());
+            String d = buyDateTextField.getText();
+            Date date = Date.valueOf(d);
+
+            String sql = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY +?, MRP=? WHERE S_NAME = ? and S_QUANTITY > 0";
+            PreparedStatement ps1 = oc.conn.prepareStatement(sql);
+            ps1.setInt(1, quantity);
+            ps1.setInt(2, mrp);
+            ps1.setString(3, name);
+
+            ps1.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e + " quantityAdd");
+        }
+    }
+
+    private void sellTableMouseClicked(java.awt.event.MouseEvent evt) {
+        int row = sellTable.getSelectedRow();
+        DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+        sellComboBox.setSelectedItem(d.getValueAt(row, 0).toString());
+        sellIdTextField.setText(d.getValueAt(row, 1).toString());
+        sellMRPTextField.setText(d.getValueAt(row, 2).toString());
+        sellQuantityTextField.setText(d.getValueAt(row, 3).toString());
+        sellDateTextField.setText(d.getValueAt(row, 4).toString());
+    }
+
+    private void sellTableQtyUpdate(java.awt.event.ActionEvent evt) {
+
+        int i = sellTable.getSelectedRow();
+        DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+        String sellDate = sellDateTextField.getText();
+        Date date = Date.valueOf(sellDate);
+        if (i >= 0) {
+            d.setValueAt(sellComboBox.getSelectedItem().toString(), i, 0);
+            d.setValueAt(Integer.parseInt(sellIdTextField.getText()), i, 1);
+            d.setValueAt(Integer.parseInt(sellMRPTextField.getText()), i, 2);
+            d.setValueAt(Integer.parseInt(sellQuantityTextField.getText()), i, 3);
+            d.setValueAt(date, i, 4);
+
+        } else {
+            JOptionPane.showMessageDialog(frame, "update unsuccessful");
+        }
+
+    }
 }

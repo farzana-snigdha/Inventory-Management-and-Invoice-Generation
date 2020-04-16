@@ -112,6 +112,8 @@ public class Register {
 
         backButton = new JButton("Back");
         backButton.setBounds(580, 490, 100, 20);
+        backButton.setBackground(new Color(0x7E0AB5));
+        backButton.setForeground(new Color(0xFEFEFE));
         backButton.setFont(f1);
         registerPanel.add(backButton);
         backButton.addActionListener(new ActionListener() {
@@ -125,6 +127,8 @@ public class Register {
         registerButton = new JButton("Register");
         registerButton.setBounds(700, 490, 100, 20);
         registerButton.setFont(f1);
+        registerButton.setBackground(new Color(0x7E0AB5));
+        registerButton.setForeground(new Color(0xFEFEFE));
         registerPanel.add(registerButton);
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -164,6 +168,7 @@ public class Register {
                 } catch (Exception e1) {
                     System.out.println(e1);
                 }
+
 
 
             }

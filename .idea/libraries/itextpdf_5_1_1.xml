@@ -2,8 +2,12 @@
   <library name="itextpdf-5.1.1">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/itextpdf-5.1.1.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src/main/java" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$" recursive="false" />
   </library>
 </component>
