@@ -101,6 +101,21 @@ public class Dashboard {
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         mainPanel.add(tabbedPane);
 
+        panelReport = new JPanel();
+        panelReport.setLayout(null);
+        panelReport.setBackground(new Color(0xD9B9F2));
+
+        Inventory inventory = new Inventory(frame);
+        Buy buy = new Buy(frame);
+        Sell sell = new Sell(frame);
+        Paybills paybills = new Paybills(frame);
+
+        tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
+     tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
+        tabbedPane.addTab("Sell", sell.initComponents(mainPanel));
+        tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
+        tabbedPane.addTab("Report", panelReport);
+
         panelInventory = new JPanel();
         panelInventory.setLayout(null);
         panelInventory.setBackground(new Color(0xD9B9F2));
@@ -117,17 +132,14 @@ public class Dashboard {
         panelPayBills.setLayout(null);
         panelPayBills.setBackground(new Color(0xD9B9F2));
 
-        panelReport = new JPanel();
-        panelReport.setLayout(null);
-        panelReport.setBackground(new Color(0xD9B9F2));
 
-        tabbedPane.addTab("Inventory", panelInventory);
-        tabbedPane.addTab("Buy", panelBuy);
-        tabbedPane.addTab("Sell", panelSell);
-        tabbedPane.addTab("PayBills", panelPayBills);
-        tabbedPane.addTab("Report", panelReport);
+       // tabbedPane.addTab("Inventory", panelInventory);
+      //  tabbedPane.addTab("Buy", panelBuy);
+     //   tabbedPane.addTab("Sell", panelSell);
+       // tabbedPane.addTab("PayBills", panelPayBills);
+      //  tabbedPane.addTab("Report", panelReport);
 
-        {
+    /*    {
             inventoryDeleteButton = new JButton("Delete");
             inventoryDeleteButton.setBounds(600, 240, 90, 25);
             inventoryDeleteButton.setBackground(Color.cyan);
@@ -182,7 +194,7 @@ public class Dashboard {
             panelInventory.add(inventoryScrollPane);
 
 
-        }
+        } */
         {
             ///Buy Tab
 
@@ -310,41 +322,38 @@ public class Dashboard {
 
                     try {
 
-                            OracleConnection oc2 = new OracleConnection();
+                        OracleConnection oc2 = new OracleConnection();
 
-                            String sql = "select S_NAME FROM SUPPLY_ORDER where S_NAME='" + buyComboBox.getSelectedItem().toString() + "'";
-                            PreparedStatement ps1 = oc2.conn.prepareStatement(sql);
-                            ResultSet rs1 = ps1.executeQuery();
-                            if (rs1.next()) {
-                                quantityAdd();
-                                table_update_inventory();
-                            } else {
+                        String sql = "select S_NAME FROM SUPPLY_ORDER where S_NAME='" + buyComboBox.getSelectedItem().toString() + "'";
+                        PreparedStatement ps1 = oc2.conn.prepareStatement(sql);
+                        ResultSet rs1 = ps1.executeQuery();
+                        if (rs1.next()) {
+                            quantityAdd();
+                            table_update_inventory();
+                        } else {
 
-                                String buyDate1 = buyDateTextField.getText();
-                                Date sqlBuyDate1 = Date.valueOf(buyDate1);
+                            String buyDate1 = buyDateTextField.getText();
+                            Date sqlBuyDate1 = Date.valueOf(buyDate1);
 
 
-                                String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE) values(?, ?, ?, ?, ?, ?)";
-                                ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER);
-                                ps.setString(1, buyComboBox.getSelectedItem().toString());
-                                ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
-                                ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
-                                ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
-                                ps.setString(5, buySupplierTextField.getText().trim());
-                                ps.setDate(6, sqlBuyDate1);
-                                ps.executeUpdate();
+                            String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE) values(?, ?, ?, ?, ?, ?)";
+                            ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER);
+                            ps.setString(1, buyComboBox.getSelectedItem().toString());
+                            ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
+                            ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
+                            ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
+                            ps.setString(5, buySupplierTextField.getText().trim());
+                            ps.setDate(6, sqlBuyDate1);
+                            ps.executeUpdate();
 
-                                table_update_inventory();
+                            table_update_inventory();
 
-                            }
+                        }
                         buy_priceTextField.setText("");
                         buyQuantityTextField.setText("");
                         buyMRPTextField.setText("");
                         buySupplierTextField.setText("");
                         buyDateTextField.setText("");
-
-
-
 
 
                     } catch (Exception e2) {
@@ -465,6 +474,7 @@ public class Dashboard {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
+                        OracleConnection oc = new OracleConnection();
                         String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID) values(?,?)";
                         PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
                         ps1.setInt(1, Integer.parseInt(sellQuantityTextField.getText()));
@@ -485,40 +495,24 @@ public class Dashboard {
                                 Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), date});
                         sellQuantityTextField.setText("");
 
-                        sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
+           /*           sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
                             public void mouseClicked(java.awt.event.MouseEvent evt) {
                                 sellTableMouseClicked(evt);
                             }
                         });
                         sellScrollPane.setViewportView(sellTable);
 
+*/
 
 
-                        } catch (Exception e1) {
-                            System.out.println(e1);
-                        }
-//sellTableQtyUpdate(e);
-
-
-
+                    } catch (Exception c) {
+                        System.out.println(c + "sell qty ");
+                    }
                 }
             });
 
             panelSell.add(sellAddButton);
 
-
-        /*    sellTable.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    int row = sellTable.getSelectedRow();
-                    DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
-                    sellComboBox.setSelectedItem(d.getValueAt(row, 0).toString());
-                    sellIdTextField.setText(d.getValueAt(row, 1).toString());
-                    sellMRPTextField.setText(d.getValueAt(row, 2).toString());
-                    sellQuantityTextField.setText(d.getValueAt(row, 3).toString());
-                    sellDateTextField.setText(d.getValueAt(row, 4).toString());
-                }
-            });*/
 
 
             sellSaveButton = new JButton("Save");
@@ -649,7 +643,6 @@ public class Dashboard {
             expAddButton = new JButton("Add");
             expAddButton.setFont(f2);
             expAddButton.setForeground(new Color(0xFEFEFE));
-
             expAddButton.setBackground(new Color(0x7E0AB5));
             expAddButton.setBounds(450, 500, 100, 30);
             panelPayBills.add(expAddButton);
@@ -876,20 +869,32 @@ public class Dashboard {
     }
 
     private void sellTableQtyUpdate(java.awt.event.ActionEvent evt) {
+        try {
 
-        int i = sellTable.getSelectedRow();
-        DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
-        String sellDate = sellDateTextField.getText();
-        Date date = Date.valueOf(sellDate);
-        if (i >= 0) {
-            d.setValueAt(sellComboBox.getSelectedItem().toString(), i, 0);
-            d.setValueAt(Integer.parseInt(sellIdTextField.getText()), i, 1);
-            d.setValueAt(Integer.parseInt(sellMRPTextField.getText()), i, 2);
-            d.setValueAt(Integer.parseInt(sellQuantityTextField.getText()), i, 3);
-            d.setValueAt(date, i, 4);
+            OracleConnection oc1=new OracleConnection();
+            String sql="update P_QUANTITY=? from SALES_DETAILS where P_ID=?";
+            PreparedStatement p=oc1.conn.prepareStatement(sql);
+            p.setInt(1, Integer.parseInt(sellQuantityTextField.getText()));
+            p.setString(2, sellIdTextField.getText());
+            p.executeUpdate();
 
-        } else {
-            JOptionPane.showMessageDialog(frame, "update unsuccessful");
+            int i = sellTable.getSelectedRow();
+            DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+            String sellDate = sellDateTextField.getText();
+            Date date = Date.valueOf(sellDate);
+            if (i >= 0) {
+                d.setValueAt(sellComboBox.getSelectedItem().toString(), i, 0);
+                d.setValueAt(Integer.parseInt(sellIdTextField.getText()), i, 1);
+                d.setValueAt(Integer.parseInt(sellMRPTextField.getText()), i, 2);
+                d.setValueAt(Integer.parseInt(sellQuantityTextField.getText()), i, 3);
+                d.setValueAt(date, i, 4);
+
+            } else {
+                JOptionPane.showMessageDialog(frame, "update unsuccessful");
+            }
+
+        } catch (Exception w) {
+            System.out.println(w + "sellTableQtyUpdate ");
         }
 
     }
