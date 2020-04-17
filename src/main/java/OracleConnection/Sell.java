@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.*;
+import java.lang.*;
+
 
 public class Sell {
     private JFrame frame;
@@ -198,16 +200,14 @@ public class Sell {
 
                         OracleConnection oc1 = new OracleConnection();
                         String sql2 = "insert into SALES (SALE_DATE) values(?)";
-                        int[] colIndex=new int[]{1};
-                        PreparedStatement ps2 = oc1.conn.prepareStatement(sql2,colIndex);
+                        String[] colName = new String[]{"SALE_ID"};
+                        PreparedStatement ps2 = oc1.conn.prepareStatement(sql2, colName);
 
-                        for (int i = 0; i < sellTable.getRowCount(); i++) {
-                            Date d = (Date) sellTable.getValueAt(i, 5);
 
-                            ps2.setDate(1, d);
-                            ps2.executeUpdate();
-                        }
-                        ps2.addBatch();
+                        Date d = (Date) sellTable.getValueAt(0, 5);
+
+                        ps2.setDate(1, d);
+                        ps2.executeUpdate();
 
 
                         int lastInsertId = 0;
@@ -221,10 +221,10 @@ public class Sell {
                         OracleConnection oc = new OracleConnection();
                         String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
                         PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
-
+                        String qty="",mrp="";
                         for (int i = 0; i < sellTable.getRowCount(); i++) {
-                            String qty = (String) sellTable.getValueAt(i, 3);
-                            String mrp = (String) sellTable.getValueAt(i, 2);
+                             qty = (String) sellTable.getValueAt(i, 3);
+                             mrp = (String) sellTable.getValueAt(i, 2);
 
                             ps1.setInt(1, Integer.parseInt(qty));
                             ps1.setInt(2, Integer.parseInt(mrp));
@@ -234,6 +234,22 @@ public class Sell {
                         }
                         ps1.addBatch();
 
+
+                        {
+                            //qty minus
+                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY -? WHERE S_NAME = ? and S_QUANTITY > 0";
+                            OracleConnection oc3 = new OracleConnection();
+                            PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
+                            for (int i=0;i<sellTable.getRowCount();i++){
+                                String name= (String) sellTable.getValueAt(i,0);
+                                qty=(String) sellTable.getValueAt(i,3);
+
+                                ps3.setString(2,name);
+                                ps3.setInt(1, Integer.parseInt(qty));
+                                ps3.execute();
+                            }
+                            ps3.addBatch();
+                        }
 
                     } catch (Exception ex) {
                         System.out.println(ex + " sell save");
@@ -362,43 +378,45 @@ public class Sell {
                         JOptionPane.showMessageDialog(frame, "update unsuccessful");
                     }
 
-                }} }catch(Exception w){
-                    System.out.println(w + "sellTableQtyUpdate ");
-                }
-
-            }
-
-            private void addToJtable () {
-                try {
-
-                    String sellDate = sellDateTextField.getText();
-                    Date date = Date.valueOf(sellDate);
-
-                    OracleConnection oc1 = new OracleConnection();
-                    String sql = "select * from SUPPLY_ORDER where S_NAME=?";
-                    PreparedStatement p1 = oc1.conn.prepareStatement(sql);
-                    p1.setString(1, sellComboBox.getSelectedItem().toString());
-                    ResultSet rs1 = p1.executeQuery();
-
-                    while (rs1.next()) {
-                        int availableQty = rs1.getInt("S_QUANTITY");
-
-                        int mrp = Integer.parseInt(sellMRPTextField.getText());
-                        int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
-
-                        int total = mrp * chosenQty;
-                        if (chosenQty > availableQty) {
-                            JOptionPane.showMessageDialog(frame, "Available product = " + availableQty + " \n Please input another quantity");
-                        } else {
-                            DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
-                            d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
-                                    Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
-                            sellQuantityTextField.setText("");
-                        }
-
-                    }
-                } catch (Exception e) {
-                    System.out.println(e + " addToJtable sell");
                 }
             }
+        } catch (Exception w) {
+            System.out.println(w + "sellTableQtyUpdate ");
         }
+
+    }
+
+    private void addToJtable() {
+        try {
+
+            String sellDate = sellDateTextField.getText();
+            Date date = Date.valueOf(sellDate);
+
+            OracleConnection oc1 = new OracleConnection();
+            String sql = "select * from SUPPLY_ORDER where S_NAME=?";
+            PreparedStatement p1 = oc1.conn.prepareStatement(sql);
+            p1.setString(1, sellComboBox.getSelectedItem().toString());
+            ResultSet rs1 = p1.executeQuery();
+
+            while (rs1.next()) {
+                int availableQty = rs1.getInt("S_QUANTITY");
+
+                int mrp = Integer.parseInt(sellMRPTextField.getText());
+                int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
+
+                int total = mrp * chosenQty;
+                if (chosenQty > availableQty) {
+                    JOptionPane.showMessageDialog(frame, "Available product = " + availableQty + " \n Please input another quantity");
+                } else {
+                    DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+                    d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
+                            Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
+                    sellQuantityTextField.setText("");
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println(e + " addToJtable sell");
+        }
+    }
+}

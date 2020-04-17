@@ -20,7 +20,7 @@ public class LoginPage {
     private JButton loginButton, registerButton;
 
     LoginPage(JFrame frame) {
-        this.frame=frame;
+        this.frame = frame;
         initComponents();
     }
 
@@ -80,6 +80,9 @@ public class LoginPage {
                     } else {
 
                         JOptionPane.showMessageDialog(frame, "invalid user id or password");
+                        userNameField.setText("");
+                        passwordField.setText("");
+                        userNameField.requestFocus();
                     }
                 } catch (Exception e1) {
                     System.out.println(e1);
