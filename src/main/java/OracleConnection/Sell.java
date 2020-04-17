@@ -22,14 +22,14 @@ public class Sell {
     private JLabel sellQuantityLabel;
     private JLabel sellDateLabel;
     private JTextField sellQuantityTextField, sellDateTextField;//sell
-    private JButton invoiceButton, sellSaveButton,sellAddButton,sellUpdateButton;//sell
+    private JButton invoiceButton, sellSaveButton, sellAddButton, sellUpdateButton;//sell
     private JTable sellTable;
-    private JPanel panelSell,Panel;
-    private DefaultTableModel  sellModel;
-    private JScrollPane  sellScrollPane;
+    private JPanel panelSell, Panel;
+    private DefaultTableModel sellModel;
+    private JScrollPane sellScrollPane;
 
-    private String[] sellColumns = {"Name", "Id", "MRP","Quantity","Date"};
-    private String[] sellRows = new String[5];
+    private String[] sellColumns = {"Name", "Id", "MRP", "Quantity", "Total", "Date"};
+    private String[] sellRows = new String[6];
 
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
@@ -50,13 +50,13 @@ public class Sell {
     }
 
 
-    Sell(JFrame frame){
-        this.frame=frame;
+    Sell(JFrame frame) {
+        this.frame = frame;
     }
 
-    public JPanel initComponents(final JPanel mainPanel){
+    public JPanel initComponents(final JPanel mainPanel) {
 
-        this.Panel=mainPanel;
+        this.Panel = mainPanel;
 
         panelSell = new JPanel();
         panelSell.setLayout(null);
@@ -181,20 +181,14 @@ public class Sell {
                         ps2.setDate(1, date);
                         ps2.executeUpdate();
 
+                        addToJtable();
 
-                        DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
-                        d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
-                                Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), date});
-                        sellQuantityTextField.setText("");
-
-                      sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
+                        sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
                             public void mouseClicked(java.awt.event.MouseEvent evt) {
                                 sellTableMouseClicked(evt);
                             }
                         });
                         sellScrollPane.setViewportView(sellTable);
-
-
 
 
                     } catch (Exception c) {
@@ -236,15 +230,15 @@ public class Sell {
                     //    new CreateInvoice(frame);
                     TableModel tm = sellTable.getModel();
                     int rowNum = sellTable.getRowCount();
-                    Object[] ob = new Object[4];
+                    Object[] ob = new Object[5];
                     CreateInvoice createInvoice = new CreateInvoice(frame);
                     DefaultTableModel d = (DefaultTableModel) createInvoice.table.getModel();
                     for (int i = 0; i < rowNum; i++) {
-                        ob[0] = i;
+                        ob[0] = i+1;
                         ob[1] = tm.getValueAt(i, 0);
                         ob[2] = tm.getValueAt(i, 2);
                         ob[3] = tm.getValueAt(i, 3);
-                        // ob[4] = tm.getValueAt(i, 4);
+                        ob[4] = tm.getValueAt(i, 4);
                         d.addRow(ob);
                     }
                     mainPanel.setVisible(false);
@@ -266,7 +260,6 @@ public class Sell {
         }
 
 
-
         prodName();
         return panelSell;
     }
@@ -286,8 +279,7 @@ public class Sell {
 
         } catch (Exception c) {
             System.out.println(c);
-        }
-        finally {
+        } finally {
             try {
                 rs.close();
                 ps.close();
@@ -339,5 +331,38 @@ public class Sell {
 
     }
 
+    private void addToJtable() {
+        try {
 
+            String sellDate = sellDateTextField.getText();
+            Date date = Date.valueOf(sellDate);
+
+            OracleConnection oc1 = new OracleConnection();
+            String sql = "select * from SUPPLY_ORDER where S_NAME=?";
+            PreparedStatement p1 = oc1.conn.prepareStatement(sql);
+            p1.setString(1, sellComboBox.getSelectedItem().toString());
+            ResultSet rs1 = p1.executeQuery();
+
+            while (rs1.next()) {
+    int availableQty=rs1.getInt("S_QUANTITY");
+
+    int mrp= Integer.parseInt(sellMRPTextField.getText());
+                int chosenQty= Integer.parseInt(sellQuantityTextField.getText());
+
+                int total=mrp*chosenQty;
+                if(chosenQty>availableQty){
+                    JOptionPane.showMessageDialog(frame,"Available product = "+availableQty+" \n Please input another quantity");
+                }
+                else {
+                    DefaultTableModel d= (DefaultTableModel) sellTable.getModel();
+                    d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
+                            Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
+                    sellMRPTextField.setText("");
+                }
+
+            }
+        } catch (Exception e) {
+            System.out.println(e + " addToJtable sell");
+        }
+    }
 }

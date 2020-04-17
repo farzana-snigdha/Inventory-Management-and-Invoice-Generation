@@ -13,7 +13,7 @@ import java.util.Vector;
 
 public class Inventory {
     private JFrame frame;
-    private JPanel panelInventory;
+    private JPanel panelInventory,Panel;
     private Font f1, f2;
     private JButton  inventoryDeleteButton;
 
@@ -30,9 +30,13 @@ public class Inventory {
     ResultSet rs;
     public Inventory(JFrame frame) {
         this.frame=frame;
+        initComponents(Panel);
+        table_update_inventory();
     }
 
     public JPanel initComponents(final JPanel mainPanel){
+
+        this.Panel=mainPanel;
 
         panelInventory = new JPanel();
         panelInventory.setLayout(null);

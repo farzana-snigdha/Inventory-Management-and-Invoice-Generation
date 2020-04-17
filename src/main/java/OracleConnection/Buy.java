@@ -26,6 +26,8 @@ public class Buy {
 
     public Buy(JFrame frame) {
         this.frame = frame;
+        inv.table_update_inventory();
+
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
