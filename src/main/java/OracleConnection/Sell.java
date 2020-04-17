@@ -166,23 +166,8 @@ public class Sell {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        OracleConnection oc = new OracleConnection();
-                        String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID) values(?,?)";
-                        PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
-                        ps1.setInt(1, Integer.parseInt(sellQuantityTextField.getText()));
-                        ps1.setInt(2, Integer.parseInt(sellIdTextField.getText()));
-                        ps1.executeUpdate();
-
-                        String sellDate = sellDateTextField.getText();
-                        Date date = Date.valueOf(sellDate);
-                        OracleConnection oc1 = new OracleConnection();
-                        String sql2 = "insert into SALES (SALE_DATE) values(?)";
-                        PreparedStatement ps2 = oc1.conn.prepareStatement(sql2);
-                        ps2.setDate(1, date);
-                        ps2.executeUpdate();
-
                         addToJtable();
-
+                        panelSell.add(sellAddButton);
                         sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
                             public void mouseClicked(java.awt.event.MouseEvent evt) {
                                 sellTableMouseClicked(evt);
@@ -190,13 +175,13 @@ public class Sell {
                         });
                         sellScrollPane.setViewportView(sellTable);
 
-
                     } catch (Exception c) {
                         System.out.println(c + "sell qty ");
                     }
                 }
             });
             panelSell.add(sellAddButton);
+
 
             sellSaveButton = new JButton("Save");
             sellSaveButton.setBounds(650, 450, 100, 30);
@@ -208,6 +193,46 @@ public class Sell {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
+                        String sellDate = sellDateTextField.getText();
+                        Date date = Date.valueOf(sellDate);
+
+                        OracleConnection oc1 = new OracleConnection();
+                        String sql2 = "insert into SALES (SALE_DATE) values(?)";
+                        int[] colIndex=new int[]{1};
+                        PreparedStatement ps2 = oc1.conn.prepareStatement(sql2,colIndex);
+
+                        for (int i = 0; i < sellTable.getRowCount(); i++) {
+                            Date d = (Date) sellTable.getValueAt(i, 5);
+
+                            ps2.setDate(1, d);
+                            ps2.executeUpdate();
+                        }
+                        ps2.addBatch();
+
+
+                        int lastInsertId = 0;
+
+                        ResultSet lastId = ps2.getGeneratedKeys();
+                        if (lastId.next()) {
+                            lastInsertId = lastId.getInt(1);
+                        }
+
+
+                        OracleConnection oc = new OracleConnection();
+                        String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
+                        PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
+
+                        for (int i = 0; i < sellTable.getRowCount(); i++) {
+                            String qty = (String) sellTable.getValueAt(i, 3);
+                            String mrp = (String) sellTable.getValueAt(i, 2);
+
+                            ps1.setInt(1, Integer.parseInt(qty));
+                            ps1.setInt(2, Integer.parseInt(mrp));
+                            ps1.setInt(3, lastInsertId);
+
+                            ps1.executeUpdate();
+                        }
+                        ps1.addBatch();
 
 
                     } catch (Exception ex) {
@@ -234,7 +259,7 @@ public class Sell {
                     CreateInvoice createInvoice = new CreateInvoice(frame);
                     DefaultTableModel d = (DefaultTableModel) createInvoice.table.getModel();
                     for (int i = 0; i < rowNum; i++) {
-                        ob[0] = i+1;
+                        ob[0] = i + 1;
                         ob[1] = tm.getValueAt(i, 0);
                         ob[2] = tm.getValueAt(i, 2);
                         ob[3] = tm.getValueAt(i, 3);
@@ -297,43 +322,11 @@ public class Sell {
         sellIdTextField.setText(d.getValueAt(row, 1).toString());
         sellMRPTextField.setText(d.getValueAt(row, 2).toString());
         sellQuantityTextField.setText(d.getValueAt(row, 3).toString());
-        sellDateTextField.setText(d.getValueAt(row, 4).toString());
+        sellDateTextField.setText(d.getValueAt(row, 5).toString());
     }
 
     private void sellTableQtyUpdate(java.awt.event.ActionEvent evt) {
         try {
-
-            OracleConnection oc1 = new OracleConnection();
-            String sql = "update SALES_DETAILS set P_QUANTITY=? where P_ID=?";
-            PreparedStatement p = oc1.conn.prepareStatement(sql);
-            p.setInt(1, Integer.parseInt(sellQuantityTextField.getText()));
-            p.setString(2, sellIdTextField.getText());
-            p.executeUpdate();
-
-            int i = sellTable.getSelectedRow();
-            DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
-            String sellDate = sellDateTextField.getText();
-            Date date = Date.valueOf(sellDate);
-            if (i >= 0) {
-                d.setValueAt(sellComboBox.getSelectedItem().toString(), i, 0);
-                d.setValueAt(Integer.parseInt(sellIdTextField.getText()), i, 1);
-                d.setValueAt(Integer.parseInt(sellMRPTextField.getText()), i, 2);
-                d.setValueAt(Integer.parseInt(sellQuantityTextField.getText()), i, 3);
-                d.setValueAt(date, i, 4);
-
-            } else {
-                JOptionPane.showMessageDialog(frame, "update unsuccessful");
-            }
-
-        } catch (Exception w) {
-            System.out.println(w + "sellTableQtyUpdate ");
-        }
-
-    }
-
-    private void addToJtable() {
-        try {
-
             String sellDate = sellDateTextField.getText();
             Date date = Date.valueOf(sellDate);
 
@@ -344,25 +337,68 @@ public class Sell {
             ResultSet rs1 = p1.executeQuery();
 
             while (rs1.next()) {
-    int availableQty=rs1.getInt("S_QUANTITY");
+                int availableQty = rs1.getInt("S_QUANTITY");
 
-    int mrp= Integer.parseInt(sellMRPTextField.getText());
-                int chosenQty= Integer.parseInt(sellQuantityTextField.getText());
+                int mrp = Integer.parseInt(sellMRPTextField.getText());
+                int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
 
-                int total=mrp*chosenQty;
-                if(chosenQty>availableQty){
-                    JOptionPane.showMessageDialog(frame,"Available product = "+availableQty+" \n Please input another quantity");
-                }
-                else {
-                    DefaultTableModel d= (DefaultTableModel) sellTable.getModel();
-                    d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
-                            Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
-                    sellMRPTextField.setText("");
+                int total = mrp * chosenQty;
+                if (chosenQty > availableQty) {
+                    JOptionPane.showMessageDialog(frame, "Available product = " + availableQty + " \n Please input another quantity");
+                } else {
+
+
+                    int i = sellTable.getSelectedRow();
+                    DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+                    if (i >= 0) {
+                        d.setValueAt(sellComboBox.getSelectedItem().toString(), i, 0);
+                        d.setValueAt(Integer.parseInt(sellIdTextField.getText()), i, 1);
+                        d.setValueAt(Integer.parseInt(sellMRPTextField.getText()), i, 2);
+                        d.setValueAt(Integer.parseInt(sellQuantityTextField.getText()), i, 3);
+                        d.setValueAt(total, i, 4);
+                        d.setValueAt(date, i, 5);
+
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "update unsuccessful");
+                    }
+
+                }} }catch(Exception w){
+                    System.out.println(w + "sellTableQtyUpdate ");
                 }
 
             }
-        } catch (Exception e) {
-            System.out.println(e + " addToJtable sell");
+
+            private void addToJtable () {
+                try {
+
+                    String sellDate = sellDateTextField.getText();
+                    Date date = Date.valueOf(sellDate);
+
+                    OracleConnection oc1 = new OracleConnection();
+                    String sql = "select * from SUPPLY_ORDER where S_NAME=?";
+                    PreparedStatement p1 = oc1.conn.prepareStatement(sql);
+                    p1.setString(1, sellComboBox.getSelectedItem().toString());
+                    ResultSet rs1 = p1.executeQuery();
+
+                    while (rs1.next()) {
+                        int availableQty = rs1.getInt("S_QUANTITY");
+
+                        int mrp = Integer.parseInt(sellMRPTextField.getText());
+                        int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
+
+                        int total = mrp * chosenQty;
+                        if (chosenQty > availableQty) {
+                            JOptionPane.showMessageDialog(frame, "Available product = " + availableQty + " \n Please input another quantity");
+                        } else {
+                            DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
+                            d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
+                                    Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
+                            sellQuantityTextField.setText("");
+                        }
+
+                    }
+                } catch (Exception e) {
+                    System.out.println(e + " addToJtable sell");
+                }
+            }
         }
-    }
-}
