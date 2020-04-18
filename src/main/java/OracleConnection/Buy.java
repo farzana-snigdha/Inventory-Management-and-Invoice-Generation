@@ -177,7 +177,7 @@ public class Buy {
                         ResultSet rs1 = ps1.executeQuery();
                         if (rs1.next()) {
                             quantityAdd();
-                            inv.table_update_inventory();
+                          //  inv.table_update_inventory();
                         } else {
 
                             String buyDate1 = buyDateTextField.getText();

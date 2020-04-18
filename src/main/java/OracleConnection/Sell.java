@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.*;
-import java.lang.*;
 
 
 public class Sell {
@@ -216,33 +215,35 @@ public class Sell {
                         if (lastId.next()) {
                             lastInsertId = lastId.getInt(1);
                         }
+                        System.out.println(lastInsertId);
 
+                        {
+                            OracleConnection oc = new OracleConnection();
+                            String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
+                            PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
+                            String qty = "", mrp = "";
+                            for (int i = 0; i < sellTable.getRowCount(); i++) {
+                                qty =  sellTable.getValueAt(i, 3).toString();
+                                mrp =  sellTable.getValueAt(i, 2).toString();
 
-                        OracleConnection oc = new OracleConnection();
-                        String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
-                        PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
-                        String qty="",mrp="";
-                        for (int i = 0; i < sellTable.getRowCount(); i++) {
-                             qty = (String) sellTable.getValueAt(i, 3);
-                             mrp = (String) sellTable.getValueAt(i, 2);
+                                ps1.setInt(1, Integer.parseInt(qty));
+                                ps1.setInt(2, Integer.parseInt(mrp));
+                                ps1.setInt(3, lastInsertId);
 
-                            ps1.setInt(1, Integer.parseInt(qty));
-                            ps1.setInt(2, Integer.parseInt(mrp));
-                            ps1.setInt(3, lastInsertId);
-
-                            ps1.executeUpdate();
+                                ps1.executeUpdate();
+                            }
+                            ps1.addBatch();
                         }
-                        ps1.addBatch();
-
 
                         {
                             //qty minus
                             String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY -? WHERE S_NAME = ? and S_QUANTITY > 0";
                             OracleConnection oc3 = new OracleConnection();
                             PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
+                            String qty = "";
                             for (int i=0;i<sellTable.getRowCount();i++){
-                                String name= (String) sellTable.getValueAt(i,0);
-                                qty=(String) sellTable.getValueAt(i,3);
+                                String name=  sellTable.getValueAt(i,0).toString();
+                                qty= sellTable.getValueAt(i,3).toString();
 
                                 ps3.setString(2,name);
                                 ps3.setInt(1, Integer.parseInt(qty));
@@ -250,6 +251,7 @@ public class Sell {
                             }
                             ps3.addBatch();
                         }
+
 
                     } catch (Exception ex) {
                         System.out.println(ex + " sell save");
