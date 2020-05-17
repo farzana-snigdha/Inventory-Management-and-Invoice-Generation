@@ -139,17 +139,21 @@ public class Register {
                         if ((passwordField.getText()).equals(retypePasswordField.getText())) {
 
                             OracleConnection oc = new OracleConnection();
-
                             String sql = "insert into USERS (U_ID, NAME, PASSWORD, EMAIL) values(?, ?, ?, ?)";
-
                             PreparedStatement ps = oc.conn.prepareStatement(sql);
-
                             ps.setInt(1, Integer.parseInt(userTextField.getText().trim()));
                             ps.setString(2, nameTextField.getText().trim());
                             ps.setString(3, passwordField.getText());
                             ps.setString(4, emailTextField.getText().trim());
-
                             int x = ps.executeUpdate();
+
+                            OracleConnection oc1 = new OracleConnection();
+                            String sql1 = "insert into SALES (U_ID) values(?)";
+                            PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
+                            ps1.setInt(1, Integer.parseInt(userTextField.getText().trim()));
+                            ps1.executeUpdate();
+
+
                             if (x > 0) {
                                 new Dashboard(frame);
                                 registerPanel.setVisible(false);

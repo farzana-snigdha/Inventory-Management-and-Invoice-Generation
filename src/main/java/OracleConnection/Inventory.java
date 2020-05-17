@@ -64,14 +64,15 @@ public class Inventory {
                 if (warningMsg == JOptionPane.YES_OPTION) {
                     try {
                         String sql1 = "delete from PRODUCT where NAME=?";
+
                         OracleConnection oc1 = new OracleConnection();
                         PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
 
                         ps1.setString(1, name);
                         ps1.executeUpdate();
 
-                        String sql2 = "delete from SUPPLY_ORDER where S_NAME=?";
                         OracleConnection oc2 = new OracleConnection();
+                        String sql2 = "delete from SUPPLY_ORDER where S_NAME=?";
                         PreparedStatement ps2 = oc2.conn.prepareStatement(sql2);
 
                         ps2.setString(1, name);

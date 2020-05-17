@@ -3,11 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Inventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Paybills.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$10.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$9.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard$productName.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Dashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587154495321</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="inventory refresh prob">
+      <created>1587223805197</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1587223805197</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -187,7 +208,8 @@
     <MESSAGE value="price calculate" />
     <MESSAGE value="sell save prob" />
     <MESSAGE value="sell save prob+qty minus" />
-    <option name="LAST_COMMIT_MESSAGE" value="sell save prob+qty minus" />
+    <MESSAGE value="inventory refresh prob" />
+    <option name="LAST_COMMIT_MESSAGE" value="inventory refresh prob" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1032" y="180" width="816" height="775" key="#Intentions" timestamp="1587222907596">
@@ -219,10 +241,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="693" y="393" width="533" height="264" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1587045377878" />
-    <state x="439" y="82" key="CommitChangelistDialog2" timestamp="1587154493828">
+    <state x="439" y="82" key="CommitChangelistDialog2" timestamp="1587223802854">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="439" y="82" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587154493828" />
+    <state x="439" y="82" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1587223802854" />
     <state x="628" y="311" key="DetectedRootsChooserDialog" timestamp="1587043331590">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -232,26 +254,26 @@
     </state>
     <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1586673253864" />
     <state x="686" y="213" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1587045918780" />
-    <state width="1877" height="163" key="GridCell.Tab.0.bottom" timestamp="1587223161570">
+    <state width="1877" height="163" key="GridCell.Tab.0.bottom" timestamp="1587238782574">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1586719596660" />
-    <state width="1877" height="163" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587223161570" />
-    <state width="1877" height="163" key="GridCell.Tab.0.center" timestamp="1587223161569">
+    <state width="1877" height="163" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587238782574" />
+    <state width="1877" height="163" key="GridCell.Tab.0.center" timestamp="1587238782574">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1586719596660" />
-    <state width="1877" height="163" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587223161569" />
-    <state width="1877" height="163" key="GridCell.Tab.0.left" timestamp="1587223161569">
+    <state width="1877" height="163" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587238782574" />
+    <state width="1877" height="163" key="GridCell.Tab.0.left" timestamp="1587238782574">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1586719596660" />
-    <state width="1877" height="163" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587223161569" />
-    <state width="1877" height="163" key="GridCell.Tab.0.right" timestamp="1587223161570">
+    <state width="1877" height="163" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587238782574" />
+    <state width="1877" height="163" key="GridCell.Tab.0.right" timestamp="1587238782574">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1586719596660" />
-    <state width="1877" height="163" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587223161570" />
+    <state width="1877" height="163" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587238782574" />
     <state x="373" y="86" key="Maven.ArtifactSearchDialog" timestamp="1586604497841">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
@@ -281,21 +303,5 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="531" y="226" width="840" height="1034" key="run.anything.popup/0.0.1920.1030@0.0.1920.1030" timestamp="1586605153177" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java</url>
-          <line>118</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java</url>
-          <line>375</line>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

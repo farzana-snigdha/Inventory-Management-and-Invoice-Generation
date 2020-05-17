@@ -14,12 +14,12 @@ public class Paybills {
 
     private JFrame frame;
     private Font f1, f2;
-    private JPanel panelPayBills,panel;
+    private JPanel panelPayBills, panel;
 
     private JComboBox expenseComboBox;
     private JLabel expId, purpose, amount, date, description;//expense Paybills
     private JTextField tfExpId, tfAmount, tfDate, tfDescription;//expense Paybills
-    private JButton expSaveButton, expDelButton,expAddButton;
+    private JButton expSaveButton, expDelButton, expAddButton;
     private static String[] purposes = {"Select an option", "Employee Salary", "Rent", "Utility Bills", "Others"};//expense list.
 
     private JTable expTable;
@@ -33,13 +33,13 @@ public class Paybills {
     PreparedStatement ps;
     ResultSet rs;
 
-    Paybills(JFrame frame){
-        this.frame=frame;
+    Paybills(JFrame frame) {
+        this.frame = frame;
     }
 
-    public JPanel initComponents(JPanel mainPanel){
+    public JPanel initComponents(JPanel mainPanel) {
 
-        this.panel=mainPanel;
+        this.panel = mainPanel;
 
         panelPayBills = new JPanel();
         panelPayBills.setLayout(null);
@@ -113,20 +113,25 @@ public class Paybills {
                     //purpose
                     String purpose = expenseComboBox.getSelectedItem().toString();
 
-                    // OracleConnect oc = new OracleConnect();
                     String sqlExpense = "insert into EXPENSES (E_ID, PURPOSE, SUP_DATE, DESCRIPTION, AMOUNT) values(?, ?, ?, ?, ?)";
                     ps = oc.conn.prepareStatement(sqlExpense);
-
                     ps.setInt(1, Integer.parseInt(tfExpId.getText()));
                     ps.setString(2, purpose);
                     ps.setDate(3, sqlExpDate);
                     ps.setString(4, tfDescription.getText());
                     ps.setInt(5, Integer.parseInt(tfAmount.getText()));
                     ps.executeUpdate();
+                  /*  {
+                        //sal_id(pk) empty,so it wont work
+                        OracleConnection oc1 = new OracleConnection();
+                        String sql1 = "insert into SALARY (DESIGNATION, AMOUNT) values(?, ?)";
+                        PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
+                        ps1.setString(1, tfDescription.getText());
+                        ps1.setInt(2, Integer.parseInt(tfAmount.getText()));
+                        ps1.executeUpdate();
+                    } */
 
-                    DefaultTableModel d = (DefaultTableModel) expTable.getModel();
-                    d.addRow(new Object[]{expenseComboBox.getSelectedItem().toString(), Integer.parseInt(tfExpId.getText()),
-                            Integer.parseInt(tfAmount.getText()), sqlExpDate, tfDescription.getText()});
+                    expenseTableAdd();
                     tfExpId.setText("");
                     tfDate.setText("");
                     tfDescription.setText("");
@@ -145,7 +150,6 @@ public class Paybills {
         });
 
 
-
         expSaveButton = new JButton("Save");
         expSaveButton.setFont(f2);
         expSaveButton.setForeground(new Color(0xFEFEFE));
@@ -156,8 +160,8 @@ public class Paybills {
         expSaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               new Paybills(frame);
-               panelPayBills.setVisible(false);
+                new Paybills(frame);
+                panelPayBills.setVisible(false);
             }
         });
 
@@ -209,5 +213,15 @@ public class Paybills {
 
         return panelPayBills;
 
+    }
+
+    private void expenseTableAdd() {
+        //date
+        String expDate = tfDate.getText();
+        Date sqlExpDate = Date.valueOf(expDate);
+
+        DefaultTableModel d = (DefaultTableModel) expTable.getModel();
+        d.addRow(new Object[]{expenseComboBox.getSelectedItem().toString(), Integer.parseInt(tfExpId.getText()),
+                Integer.parseInt(tfAmount.getText()), sqlExpDate, tfDescription.getText()});
     }
 }

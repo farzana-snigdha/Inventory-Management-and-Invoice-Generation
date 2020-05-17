@@ -194,8 +194,6 @@ public class Sell {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        String sellDate = sellDateTextField.getText();
-                        Date date = Date.valueOf(sellDate);
 
                         OracleConnection oc1 = new OracleConnection();
                         String sql2 = "insert into SALES (SALE_DATE) values(?)";
@@ -206,6 +204,7 @@ public class Sell {
                         Date d = (Date) sellTable.getValueAt(0, 5);
 
                         ps2.setDate(1, d);
+                       // ps2.setInt(2, Integer.parseInt(reg.userTextField.getText()));
                         ps2.executeUpdate();
 
 
@@ -221,13 +220,13 @@ public class Sell {
                             OracleConnection oc = new OracleConnection();
                             String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
                             PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
-                            String qty = "", mrp = "";
+                            String qty = "", id = "";
                             for (int i = 0; i < sellTable.getRowCount(); i++) {
                                 qty =  sellTable.getValueAt(i, 3).toString();
-                                mrp =  sellTable.getValueAt(i, 2).toString();
+                                id =  sellTable.getValueAt(i, 1).toString();
 
                                 ps1.setInt(1, Integer.parseInt(qty));
-                                ps1.setInt(2, Integer.parseInt(mrp));
+                                ps1.setInt(2, Integer.parseInt(id));
                                 ps1.setInt(3, lastInsertId);
 
                                 ps1.executeUpdate();
