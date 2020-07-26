@@ -9,7 +9,7 @@ public class OracleConnection {
     static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
     static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:xe";
     static final String USER = "SYSTEM";
-    static final String PASS = "Test12345";
+    static final String PASS = "snigdha";
     Connection conn = null;
     Statement stmt = null;
 

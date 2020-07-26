@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0577853f-5eb3-43e6-9d70-7cd8f8a32c1c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/itextpdf_5_1_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/ojdbc6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Buy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/AdminDashboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/LoginPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Sell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/OracleConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/OracleConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/OracleConnection/Register.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/OracleConnection.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/AdminDashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/AdminInventory$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/AdminInventory$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Buy$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Buy$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Buy$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Buy$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Buy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Buy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/CreateInvoice$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Inventory$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Inventory$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Inventory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Inventory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/LoginPage$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/OracleConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/OracleConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Paybills$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/ProductEntry$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/ProductEntry$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Register.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Sell$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Sell$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Sell$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Sell$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Sell$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Sell$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/OracleConnection/Sell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/OracleConnection/Sell.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,28 +73,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="importAutomatically" value="true" />
-      </MavenImportingSettings>
-    </option>
-  </component>
   <component name="ProjectId" id="1a5Ddk3pptYkIi0EPi6PnVwkpE1" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="265" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/itextpdf-5.1.1.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -96,7 +132,7 @@
     </configuration>
     <configuration name="LoginPage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="OracleConnection.LoginPage" />
-      <module name="OracleConnection" />
+      <module name="Inventory-Management-and-Invoice-Generation" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="OracleConnection.*" />
@@ -121,10 +157,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.OracleConnection" />
-      <item itemvalue="Application.LoginPage" />
-      <item itemvalue="Application.Inventory" />
       <item itemvalue="Application.CreateInvoice" />
+      <item itemvalue="Application.Inventory" />
+      <item itemvalue="Application.LoginPage" />
+      <item itemvalue="Application.OracleConnection" />
     </list>
     <recent_temporary>
       <list>
@@ -156,12 +192,28 @@
     <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="updated" />
     <option name="LAST_COMMIT_MESSAGE" value="updated" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="464" y="32" key="#LoginPage" timestamp="1595785677988">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="464" y="32" key="#LoginPage/0.0.1536.824@0.0.1536.824" timestamp="1595785677988" />
     <state x="451" y="91" key="#Notifications" timestamp="1593783260599">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
@@ -174,26 +226,35 @@
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
     <state x="539" y="38" key="CommitChangelistDialog2/0.0.1920.1030@0.0.1920.1030" timestamp="1593783185680" />
-    <state x="686" y="211" key="FileChooserDialogImpl" timestamp="1594723753858">
-      <screen x="0" y="0" width="1920" height="1030" />
+    <state x="549" y="169" key="FileChooserDialogImpl" timestamp="1595784832034">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="549" y="169" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1595784832034" />
     <state x="686" y="211" key="FileChooserDialogImpl/0.0.1920.1030@0.0.1920.1030" timestamp="1594723753858" />
-    <state width="1864" height="217" key="GridCell.Tab.0.bottom" timestamp="1595784019428">
-      <screen x="0" y="0" width="1920" height="1030" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1595790950479">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595790950479" />
     <state width="1864" height="217" key="GridCell.Tab.0.bottom/0.0.1920.1030@0.0.1920.1030" timestamp="1595784019428" />
-    <state width="1864" height="217" key="GridCell.Tab.0.center" timestamp="1595784019428">
-      <screen x="0" y="0" width="1920" height="1030" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1595790950479">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595790950479" />
     <state width="1864" height="217" key="GridCell.Tab.0.center/0.0.1920.1030@0.0.1920.1030" timestamp="1595784019428" />
-    <state width="1864" height="217" key="GridCell.Tab.0.left" timestamp="1595784019428">
-      <screen x="0" y="0" width="1920" height="1030" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1595790950479">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595790950479" />
     <state width="1864" height="217" key="GridCell.Tab.0.left/0.0.1920.1030@0.0.1920.1030" timestamp="1595784019428" />
-    <state width="1864" height="217" key="GridCell.Tab.0.right" timestamp="1595784019428">
-      <screen x="0" y="0" width="1920" height="1030" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1595790950479">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595790950479" />
     <state width="1864" height="217" key="GridCell.Tab.0.right/0.0.1920.1030@0.0.1920.1030" timestamp="1595784019428" />
+    <state x="249" y="0" key="SettingsEditor" timestamp="1595784848073">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1595784848073" />
     <state x="594" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1595782584205">
       <screen x="0" y="0" width="1920" height="1030" />
     </state>
