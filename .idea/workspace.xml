@@ -157,10 +157,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.CreateInvoice" />
-      <item itemvalue="Application.Inventory" />
-      <item itemvalue="Application.LoginPage" />
       <item itemvalue="Application.OracleConnection" />
+      <item itemvalue="Application.LoginPage" />
+      <item itemvalue="Application.Inventory" />
+      <item itemvalue="Application.CreateInvoice" />
     </list>
     <recent_temporary>
       <list>
