@@ -43,7 +43,6 @@ public class ProductEntry {
         panel.add(productName);
 
 
-
         tfProductId = new JTextField();
         tfProductId.setBounds(600, 210, 250, 30);
         tfProductId.setFont(f1);
@@ -53,7 +52,6 @@ public class ProductEntry {
         tfProductName.setBounds(600, 260, 250, 30);
         tfProductName.setFont(f1);
         panel.add(tfProductName);
-
 
 
         backButton = new JButton("Back");
@@ -82,12 +80,11 @@ public class ProductEntry {
                     String sql1 = "insert into PRODUCT (P_ID, NAME, S_NAME) values(?, ?, ?)";
 
 
-
                     PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
 
                     ps1.setInt(1, Integer.parseInt(tfProductId.getText()));
                     ps1.setString(2, tfProductName.getText());
-                    ps1.setString(3,tfProductName.getText());
+                    ps1.setString(3, tfProductName.getText());
                     int x = ps1.executeUpdate();
 
                     tfProductId.setText("");
@@ -100,8 +97,9 @@ public class ProductEntry {
                         JOptionPane.showMessageDialog(frame, "input valid info");
                     }
                 } catch (Exception d) {
-                    System.out.println(d);
+                    System.out.println(d + " product table");
                 }
+
             }
         });
         panel.add(addButton);

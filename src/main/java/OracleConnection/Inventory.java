@@ -28,9 +28,11 @@ public class Inventory {
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
+    Sell sell;
     public Inventory(JFrame frame) {
         this.frame=frame;
         initComponents(Panel);
+
         table_update_inventory();
     }
 

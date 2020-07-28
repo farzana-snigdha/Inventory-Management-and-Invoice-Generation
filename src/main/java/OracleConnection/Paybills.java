@@ -1,14 +1,14 @@
 package OracleConnection;
 
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.*;
 
 public class Paybills {
 
@@ -49,6 +49,28 @@ public class Paybills {
         expenseComboBox.setBounds(550, 210, 200, 30);
         expenseComboBox.setEditable(false);
         panelPayBills.add(expenseComboBox);
+
+        expenseComboBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                try {
+                    OracleConnection oc = new OracleConnection();
+                    Statement st = oc.conn.createStatement();
+                    String purposeType = expenseComboBox.getSelectedItem().toString();
+
+                    if(purposeType=="Employee Salary") {
+                        String sql = "SELECT SUM(AMOUNT) AS TOTAL FROM SALARY, USERS WHERE SALARY.SAL_ID = USERS.SAL_ID";
+                        ResultSet rs = st.executeQuery(sql);
+                        while (rs.next()) {
+                            tfAmount.setText(String.valueOf(rs.getInt("TOTAL")));
+                        }
+                    }
+
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+        });
 
         purpose = new JLabel("Purpose : ");
         purpose.setBounds(450, 200, 150, 50);
@@ -105,10 +127,7 @@ public class Paybills {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    //date
-                    String expDate = tfDate.getText();
-                    Date sqlExpDate = Date.valueOf(expDate);
-                    // Date selectedDate = (Date) datePicker.getModel().getValue();
+                    Date sqlExpDate = getDate();
 
                     //purpose
                     String purpose = expenseComboBox.getSelectedItem().toString();
@@ -121,15 +140,7 @@ public class Paybills {
                     ps.setString(4, tfDescription.getText());
                     ps.setInt(5, Integer.parseInt(tfAmount.getText()));
                     ps.executeUpdate();
-                  /*  {
-                        //sal_id(pk) empty,so it wont work
-                        OracleConnection oc1 = new OracleConnection();
-                        String sql1 = "insert into SALARY (DESIGNATION, AMOUNT) values(?, ?)";
-                        PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
-                        ps1.setString(1, tfDescription.getText());
-                        ps1.setInt(2, Integer.parseInt(tfAmount.getText()));
-                        ps1.executeUpdate();
-                    } */
+
 
                     expenseTableAdd();
                     tfExpId.setText("");
@@ -217,11 +228,15 @@ public class Paybills {
 
     private void expenseTableAdd() {
         //date
-        String expDate = tfDate.getText();
-        Date sqlExpDate = Date.valueOf(expDate);
+        Date sqlExpDate = getDate();
 
         DefaultTableModel d = (DefaultTableModel) expTable.getModel();
         d.addRow(new Object[]{expenseComboBox.getSelectedItem().toString(), Integer.parseInt(tfExpId.getText()),
                 Integer.parseInt(tfAmount.getText()), sqlExpDate, tfDescription.getText()});
+    }
+
+    private Date getDate() {
+        String expDate = tfDate.getText();
+        return Date.valueOf(expDate);
     }
 }

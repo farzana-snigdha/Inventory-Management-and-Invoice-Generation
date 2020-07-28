@@ -124,7 +124,6 @@ public class Sell {
 
                         while (rs.next()) {
                             sellIdTextField.setText(String.valueOf(rs.getInt("P_ID")));
-                            //  sellManufacturerTextField.setText(rs.getString("MANUFACTURER"));
                             sellMRPTextField.setText(String.valueOf(rs.getInt("MRP")));
                         }
 
@@ -215,7 +214,6 @@ public class Sell {
 
                         ps2.setDate(1, d);
                         ps2.setString(2, loginPage.getUID());
-                        // ps2.setInt(2, Integer.parseInt(reg.userTextField.getText()));
                         ps2.executeUpdate();
 
 
@@ -263,9 +261,55 @@ public class Sell {
                                 ps3.executeUpdate();
                             }
                             ps3.addBatch();
-                            oc3.conn.commit();
+                           // oc3.conn.commit();
                             inv.table_update_inventory();
                         }
+
+                      /*
+                       {
+                            int n;
+                            try {
+                                String sql = "select P_ID,NAME,MRP,S_QUANTITY= S_QUANTITY -? " +
+                                        "from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME and S_NAME = ? and S_QUANTITY > 0";
+                                String qty = "";
+                                ps = oc.conn.prepareStatement(sql);
+                                for (int i = 0; i < sellTable.getRowCount(); i++) {
+                                    String name = sellTable.getValueAt(i, 0).toString();
+                                    qty = sellTable.getValueAt(i, 3).toString();
+
+                                    ps.setString(2, name);
+                                    ps.setInt(1, Integer.parseInt(qty));
+                                    ps.executeUpdate();
+                                }
+                                rs = ps.executeQuery();
+                                ResultSetMetaData rsd = rs.getMetaData();
+                                n = rsd.getColumnCount();
+
+                                DefaultTableModel d1 = (DefaultTableModel) .getModel();
+                                d1.setRowCount(0);
+
+                                while (rs.next()) {
+                                    Vector v = new Vector();
+
+                                    for (int i = 1; i <= n; i++) {
+
+                                        v.add(rs.getInt("P_ID"));
+                                        v.add(rs.getString("NAME"));
+                                        v.add(rs.getInt("MRP"));
+                                        v.add(rs.getInt("S_QUANTITY"));
+
+
+                                    }
+                                    d1.addRow(v);
+                                }
+
+
+                            } catch (Exception e3) {
+                                System.out.println(e3+ " table_update_inventory");
+                            }
+
+                        }
+                        */
 
 
                     } catch (Exception ex) {
@@ -307,7 +351,7 @@ public class Sell {
         return panelSell;
     }
 
-    private void prodName() {
+    public void prodName() {
         try {
             String sql = "select * from SUPPLY_ORDER ";
             ps = oc.conn.prepareStatement(sql);
@@ -403,14 +447,15 @@ public class Sell {
 
                 int mrp = Integer.parseInt(sellMRPTextField.getText());
                 int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
-
+                String productName=sellComboBox.getSelectedItem().toString();
+                int productId=Integer.parseInt(sellIdTextField.getText());
                 int total = mrp * chosenQty;
+
                 if (chosenQty > availableQty) {
                     JOptionPane.showMessageDialog(frame, "Available product = " + availableQty + " \n Please input another quantity");
                 } else {
                     DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
-                    d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
-                            Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
+                    d.addRow(new Object[]{productName,productId , mrp, chosenQty, total, date});
                     sellQuantityTextField.setText("");
                 }
 

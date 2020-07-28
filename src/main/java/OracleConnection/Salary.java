@@ -1,6 +1,5 @@
 package OracleConnection;
 
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -114,9 +113,9 @@ public class Salary {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tfDesignationId.setText("");
-                tfDesignationName.setText("");
-                tfAmount.setText("");
+//                tfDesignationId.setText("");
+//                tfDesignationName.setText("");
+//                tfAmount.setText("");
                 try {
                     OracleConnection oc = new OracleConnection();
 
@@ -134,6 +133,8 @@ public class Salary {
                     tfDesignationName.setText("");
                     tfAmount.setText("");
                     tfDesignationId.requestFocus();
+                    designationInfoTable();
+                    chooseDesignation();
 
                     if (x < 0) {
 
@@ -172,7 +173,7 @@ public class Salary {
         salaryTable.setSelectionBackground(Color.GRAY);
         salaryTable.setRowHeight(30);
 
-        salaryScrollPane.setBounds(150, 510, 1000, 300);
+        salaryScrollPane.setBounds(150, 460, 1000, 200);
         panel.add(salaryScrollPane);
 
         designationInfoTable();
@@ -232,12 +233,9 @@ public class Salary {
                     v.add(rs.getString("DESIGNATION"));
                     v.add(rs.getInt("AMOUNT"));
                     //  v.add(rs.getInt("S_QUANTITY"));
-
-
                 }
                 d.addRow(v);
             }
-
 
         } catch (Exception e) {
             System.out.println(e + " table_update_inventory");
