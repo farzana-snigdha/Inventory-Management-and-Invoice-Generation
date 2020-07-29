@@ -70,6 +70,12 @@ public class Sell {
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
 
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        int xsize = (int) toolkit.getScreenSize().getWidth();
+        int ysize = (int) toolkit.getScreenSize().getHeight();
+        frame.setSize(xsize, ysize);
+
 
         {
             ///Sell Tab
@@ -129,7 +135,7 @@ public class Sell {
 
 
                     } catch (Exception ex) {
-                        System.out.println(ex);
+                        System.out.println(ex+" sellComboBox");
                     }
                 }
             });
@@ -153,7 +159,7 @@ public class Sell {
 
             sellUpdateButton = new JButton("Update");
             sellUpdateButton.setFont(f2);
-            sellUpdateButton.setBounds(350, 450, 100, 30);
+            sellUpdateButton.setBounds(400, 450, 100, 30);
             sellUpdateButton.setBackground(new Color(0x7E0AB5));
             sellUpdateButton.setForeground(new Color(0xFEFEFE));
             panelSell.add(sellUpdateButton);
@@ -166,7 +172,7 @@ public class Sell {
 
             sellAddButton = new JButton("Add");
             sellAddButton.setFont(f2);
-            sellAddButton.setBounds(500, 450, 100, 30);
+            sellAddButton.setBounds(600, 450, 100, 30);
             sellAddButton.setBackground(new Color(0x7E0AB5));
             sellAddButton.setForeground(new Color(0xFEFEFE));
             sellAddButton.addActionListener(new ActionListener() {
@@ -214,6 +220,7 @@ public class Sell {
 
                         ps2.setDate(1, d);
                         ps2.setString(2, loginPage.getUID());
+                        // ps2.setInt(2, Integer.parseInt(reg.userTextField.getText()));
                         ps2.executeUpdate();
 
 
@@ -261,55 +268,8 @@ public class Sell {
                                 ps3.executeUpdate();
                             }
                             ps3.addBatch();
-                           // oc3.conn.commit();
                             inv.table_update_inventory();
                         }
-
-                      /*
-                       {
-                            int n;
-                            try {
-                                String sql = "select P_ID,NAME,MRP,S_QUANTITY= S_QUANTITY -? " +
-                                        "from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME and S_NAME = ? and S_QUANTITY > 0";
-                                String qty = "";
-                                ps = oc.conn.prepareStatement(sql);
-                                for (int i = 0; i < sellTable.getRowCount(); i++) {
-                                    String name = sellTable.getValueAt(i, 0).toString();
-                                    qty = sellTable.getValueAt(i, 3).toString();
-
-                                    ps.setString(2, name);
-                                    ps.setInt(1, Integer.parseInt(qty));
-                                    ps.executeUpdate();
-                                }
-                                rs = ps.executeQuery();
-                                ResultSetMetaData rsd = rs.getMetaData();
-                                n = rsd.getColumnCount();
-
-                                DefaultTableModel d1 = (DefaultTableModel) .getModel();
-                                d1.setRowCount(0);
-
-                                while (rs.next()) {
-                                    Vector v = new Vector();
-
-                                    for (int i = 1; i <= n; i++) {
-
-                                        v.add(rs.getInt("P_ID"));
-                                        v.add(rs.getString("NAME"));
-                                        v.add(rs.getInt("MRP"));
-                                        v.add(rs.getInt("S_QUANTITY"));
-
-
-                                    }
-                                    d1.addRow(v);
-                                }
-
-
-                            } catch (Exception e3) {
-                                System.out.println(e3+ " table_update_inventory");
-                            }
-
-                        }
-                        */
 
 
                     } catch (Exception ex) {
@@ -342,7 +302,7 @@ public class Sell {
             sellTable.setSelectionBackground(Color.GRAY);
             sellTable.setRowHeight(30);
 
-            sellScrollPane.setBounds(150, 610, 1000, 300);
+            sellScrollPane.setBounds(150, 500, (int) (xsize/1.5), 300);
             panelSell.add(sellScrollPane);
         }
 
@@ -363,15 +323,7 @@ public class Sell {
 
 
         } catch (Exception c) {
-            System.out.println(c);
-        } finally {
-            try {
-                rs.close();
-                ps.close();
-
-            } catch (SQLException e) {
-                System.out.println("prodName");
-            }
+            System.out.println(c+" prodName");
         }
     }
 
@@ -447,15 +399,14 @@ public class Sell {
 
                 int mrp = Integer.parseInt(sellMRPTextField.getText());
                 int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
-                String productName=sellComboBox.getSelectedItem().toString();
-                int productId=Integer.parseInt(sellIdTextField.getText());
-                int total = mrp * chosenQty;
 
+                int total = mrp * chosenQty;
                 if (chosenQty > availableQty) {
                     JOptionPane.showMessageDialog(frame, "Available product = " + availableQty + " \n Please input another quantity");
                 } else {
                     DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
-                    d.addRow(new Object[]{productName,productId , mrp, chosenQty, total, date});
+                    d.addRow(new Object[]{sellComboBox.getSelectedItem().toString(), Integer.parseInt(sellIdTextField.getText()),
+                            Integer.parseInt(sellMRPTextField.getText()), Integer.parseInt(sellQuantityTextField.getText()), total, date});
                     sellQuantityTextField.setText("");
                 }
 

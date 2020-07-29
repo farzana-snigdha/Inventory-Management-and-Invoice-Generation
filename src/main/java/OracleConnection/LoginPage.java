@@ -115,6 +115,8 @@ public class LoginPage {
         frame.setSize(xsize, ysize);
     }
 
+
+
     public static String getUID() {
         System.out.println(uID);
         return uID;

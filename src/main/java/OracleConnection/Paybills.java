@@ -148,6 +148,8 @@ public class Paybills {
                     tfDescription.setText("");
                     tfAmount.setText("");
 
+                    expenseComboBox.requestFocus();
+
                 } catch (Exception eq) {
                     System.out.println(eq);
                 } finally {
@@ -171,6 +173,8 @@ public class Paybills {
         expSaveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Expenses Saved Successfully");
+
                 new Paybills(frame);
                 panelPayBills.setVisible(false);
             }

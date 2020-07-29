@@ -234,10 +234,10 @@ public class Report {
             int monthNumber = getMonthNumber();
             int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
-            String sql = "select S_ID,S_NAME,SUPPLIER,SUP_DATE,S_PRICE,S_QUANTITY,MRP, MRP*S_QUANTITY AS TOTAL FROM SUPPLY_ORDER" +
-                    " where  extract ( month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber +
+            String sql = "select P_ID,SUPPLY_ORDER.S_NAME,SUPPLIER,SUP_DATE,S_PRICE,initial_qty,MRP, MRP*S_QUANTITY AS TOTAL FROM SUPPLY_ORDER,product" +
+                    " where SUPPLY_ORDER.s_name=product.s_name and extract ( month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber +
                     "' AND extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName +
-                    "' ORDER BY S_ID,S_NAME,SUP_DATE";
+                    "' ORDER BY p_ID,SUPPLY_ORDER.S_NAME,SUP_DATE";
             OracleConnection oc = new OracleConnection();
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -252,14 +252,14 @@ public class Report {
 
                 for (int i = 1; i <= n; i++) {
 
-                    v.add(rs.getInt("S_ID"));
-                    v.add(rs.getString("S_NAME"));
-                    v.add(rs.getString("SUPPLIER"));
-                    v.add(rs.getDate("SUP_DATE"));
-                    v.add(rs.getInt("S_PRICE"));
-                    v.add(rs.getInt("S_QUANTITY"));
-                    v.add(rs.getInt("MRP"));
-                    v.add(rs.getInt("TOTAL"));
+                    v.add(rs.getInt(1));
+                    v.add(rs.getString(2));
+                    v.add(rs.getString(3));
+                    v.add(rs.getDate(4));
+                    v.add(rs.getInt(5));
+                    v.add(rs.getInt(6));
+                    v.add(rs.getInt(7));
+                    v.add(rs.getInt(8));
 
                 }
                 d.addRow(v);
@@ -267,7 +267,7 @@ public class Report {
 
 
         } catch (Exception e) {
-            System.out.println(e + " designation table");
+            System.out.println(e + " buy table report");
         }
 
     }
@@ -328,9 +328,9 @@ public class Report {
 
             OracleConnection oc = new OracleConnection();
             String sql = "select e_id,purpose,sup_date,amount,description from expenses" +
-                    "where  extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName +
-                    "' AND extract (month from to_date(SALE_DATE,'yyyy-month-dd'))='" + monthNumber +
-                    " ORDER BY e_id";
+                    "where  extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName +
+                    "' and extract (month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber +
+                    "' ORDER BY e_id";
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();
@@ -395,8 +395,9 @@ public class Report {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                //     yearComboBox.addItem(rs.getDate(1));
-                System.out.println(rs.getDate(1));
+                Date d1 = new Date(rs.getDate(1).getTime());
+                yearComboBox.addItem(d1);
+                System.out.println(d1);
 
 
             }

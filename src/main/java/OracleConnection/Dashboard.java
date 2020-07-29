@@ -50,12 +50,12 @@ public class Dashboard {
         final Inventory inventory = new Inventory(frame);
         final Sell sell = new Sell(frame, inventory);
         final Buy buy = new Buy(frame, inventory,sell);
-        Paybills paybills = new Paybills(frame);
+      //  Paybills paybills = new Paybills(frame);
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
         tabbedPane.addTab("Sell", sell.initComponents(mainPanel));
-        tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
+      //  tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

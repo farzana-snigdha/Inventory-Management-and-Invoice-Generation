@@ -1,7 +1,5 @@
 package OracleConnection;
 
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,16 +19,15 @@ public class Buy {
             buyDateTextField;//Buy
     private JButton buyAddNewButton, buySaveButton;//buy
 
-
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
-    Inventory inv;
+    Inventory inv ;
     Sell sell;
 
-    public Buy(JFrame frame, Inventory i, Sell s) {
+    public Buy(JFrame frame,Inventory i,Sell s) {
         this.frame = frame;
-        inv = i;
+        inv=i;
         sell=s;
         inv.table_update_inventory();
 
@@ -104,9 +101,10 @@ public class Buy {
                 @Override
                 public void itemStateChanged(ItemEvent e) {
                     try {
+                        // OracleConnect oc = new OracleConnect();
+                        Statement st = oc.conn.createStatement();
                         String sql = "select P_ID,NAME from PRODUCT where NAME='" + buyComboBox.getSelectedItem() + "'";
-                        ps = oc.conn.prepareStatement(sql);
-                        rs = ps.executeQuery();
+                        ResultSet rs = st.executeQuery(sql);
 
                         while (rs.next()) {
                             buyIdTextField.setText(String.valueOf(rs.getInt("P_ID")));
@@ -181,31 +179,32 @@ public class Buy {
                         PreparedStatement ps1 = oc2.conn.prepareStatement(sql);
                         ResultSet rs1 = ps1.executeQuery();
                         if (rs1.next()) {
-                            quantityAdd();
-                        } else {
+                        /*   // quantityAdd();
+                        } else {*/
 
                             String buyDate1 = buyDateTextField.getText();
                             Date sqlBuyDate1 = Date.valueOf(buyDate1);
 
 
-                            String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE) values(?, ?, ?, ?, ?, ?)";
-                            String col[] = {"S_ID"};
-                            ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER, col);
+                            String sql_SUPPLY_ORDER = "insert into SUPPLY_ORDER (S_NAME, S_PRICE, S_QUANTITY, MRP, SUPPLIER, SUP_DATE,initial_qty) values(?, ?, ?, ?, ?, ?,?)";
+                            String col[]={"S_ID"};
+                            ps = oc.conn.prepareStatement(sql_SUPPLY_ORDER,col);
                             ps.setString(1, buyComboBox.getSelectedItem().toString());
                             ps.setInt(2, Integer.parseInt(buy_priceTextField.getText().trim()));
                             ps.setInt(3, Integer.parseInt(buyQuantityTextField.getText().trim()));
                             ps.setInt(4, Integer.parseInt(buyMRPTextField.getText().trim()));
                             ps.setString(5, buySupplierTextField.getText().trim());
                             ps.setDate(6, sqlBuyDate1);
+                            ps.setInt(7, Integer.parseInt(buyQuantityTextField.getText().trim()));
                             ps.executeUpdate();
 
-                            ResultSet rs = ps.getGeneratedKeys();
-                            while (rs.next()) {
+                            ResultSet rs=ps.getGeneratedKeys();
+                            while (rs.next()){
                                 //   System.out.println("id "+rs.getInt(1));
-                                int idd = rs.getInt(1);
+                                int idd=rs.getInt(1);
                                 OracleConnection oc3 = new OracleConnection();
 
-                                String sql3 = "update PRODUCT set S_ID=? where S_NAME=?";
+                                String sql3="update PRODUCT set S_ID=? where S_NAME=?";
                                 PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
                                 ps3.setInt(1, idd);
                                 ps3.setString(2, buyComboBox.getSelectedItem().toString());
@@ -289,12 +288,14 @@ public class Buy {
             String name = buyComboBox.getSelectedItem().toString();
             int mrp = Integer.parseInt(buyMRPTextField.getText());
             String d = buyDateTextField.getText();
+            Date date = Date.valueOf(d);
 
-            String sql = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY +?, MRP=? WHERE S_NAME = ? and S_QUANTITY > 0";
+            String sql = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY +?,initial_qty=initial_qty+?, MRP=? WHERE S_NAME = ? and S_QUANTITY > 0";
             PreparedStatement ps1 = oc.conn.prepareStatement(sql);
             ps1.setInt(1, quantity);
-            ps1.setInt(2, mrp);
-            ps1.setString(3, name);
+            ps1.setInt(2, quantity);
+            ps1.setInt(3, mrp);
+            ps1.setString(4, name);
 
             ps1.executeUpdate();
 
@@ -302,5 +303,6 @@ public class Buy {
             System.out.println(e + " quantityAdd");
         }
     }
+
 
 }
