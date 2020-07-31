@@ -10,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Vector;
+import java.util.*;
 
 public class Report {
     private JFrame frame;
@@ -327,10 +325,8 @@ public class Report {
             int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
             OracleConnection oc = new OracleConnection();
-            String sql = "select e_id,purpose,sup_date,amount,description from expenses" +
-                    "where  extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName +
-                    "' and extract (month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber +
-                    "' ORDER BY e_id";
+            String sql="select e_id,purpose,sup_date,amount,description from expenses where  extract (year from to_date(SUP_DATE,'dd-mon-yy'))='"+yearName+"' and extract (month from to_date(SUP_DATE,'yyyy-month-dd'))='"+monthNumber+"' ORDER BY e_id";
+
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();
@@ -374,33 +370,45 @@ public class Report {
 
 
     public void salesYearComboFillUp() {
-        String sql = "SELECT DISTINCT EXTRACT ( year from to_date(SALE_DATE,'dd-mon-yy')) as YEAR FROM SALES order by year ASC";
+        String sql = "SELECT sale_date FROM SALES order by sale_date ASC";
         yearComboFillup(sql);
     }
 
     public void buyYearComboFillUp() {
-        String sql = "SELECT DISTINCT EXTRACT ( year from to_date(SUP_DATE,'dd-mon-yy')) as YEAR FROM SUPPLY_ORDER order by year ASC";
+        String sql = "SELECT distinct sup_date FROM SUPPLY_ORDER order by sup_date ASC";
         yearComboFillup(sql);
     }
 
     public void expenseYearComboFillUp() {
-        String sql = "SELECT DISTINCT EXTRACT ( year from to_date(SUP_DATE,'dd-mon-yy')) as YEAR FROM EXPENSES order by year ASC";
+        String sql = "SELECT sup_date FROM EXPENSES order by sup_date ASC";
         yearComboFillup(sql);
     }
 
     private void yearComboFillup(String sql) {
+        yearComboBox.removeAllItems();
         try {
-            OracleConnection oc = new OracleConnection();
-            PreparedStatement ps = oc.conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            OracleConnection oc2 = new OracleConnection();
+            PreparedStatement ps2 = oc2.conn.prepareStatement(sql);
+            ResultSet rs2 = ps2.executeQuery();
+            ArrayList<Integer> arrayList = new ArrayList<Integer>();
 
-            while (rs.next()) {
-                Date d1 = new Date(rs.getDate(1).getTime());
-                yearComboBox.addItem(d1);
-                System.out.println(d1);
+            while (rs2.next()) {
+                Date d1 = new Date(rs2.getDate(1).getTime());
+                int year = d1.getYear() + 1900;
 
+                arrayList.add(year);
 
             }
+            //remove duplicate
+            LinkedHashSet<Integer> linkedHashSet = new LinkedHashSet<Integer>(arrayList);
+            arrayList.clear();
+            arrayList.addAll(linkedHashSet);
+            while (!arrayList.isEmpty()) {
+                int year = arrayList.remove(arrayList.size() - 1);
+                System.out.println(year);
+                yearComboBox.addItem(year);
+            }
+
         } catch (Exception e) {
             System.out.println(e + " yearComboFillUp");
         }

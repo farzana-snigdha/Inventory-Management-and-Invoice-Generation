@@ -313,12 +313,12 @@ public class Sell {
 
     public void prodName() {
         try {
-            String sql = "select * from SUPPLY_ORDER ";
+            String sql = "select distinct s_name,max(mrp)  from SUPPLY_ORDER group by s_name order by s_name ";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             sellComboBox.removeAllItems();
             while (rs.next()) {
-                sellComboBox.addItem(new Sell.productName(rs.getInt(1), rs.getString(2)));
+                sellComboBox.addItem(new Sell.productName(rs.getInt(2), rs.getString(1)));
             }
 
 

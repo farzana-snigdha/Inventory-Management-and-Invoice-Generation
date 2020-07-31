@@ -127,7 +127,7 @@ public class Register {
 
 
         registerButton = new JButton("Register");
-        registerButton.setBounds(600, 500, 100, 20);
+        registerButton.setBounds(600, 550, 100, 20);
         registerButton.setFont(f1);
         registerButton.setBackground(new Color(0x7E0AB5));
         registerButton.setForeground(new Color(0xFEFEFE));

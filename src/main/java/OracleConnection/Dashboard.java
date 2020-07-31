@@ -56,6 +56,7 @@ public class Dashboard {
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));
         tabbedPane.addTab("Sell", sell.initComponents(mainPanel));
       //  tabbedPane.addTab("PayBills", paybills.initComponents(mainPanel));
+
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
