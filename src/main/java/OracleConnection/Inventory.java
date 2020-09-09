@@ -188,9 +188,9 @@ import java.util.Vector;
 
 public class Inventory {
     private JFrame frame;
-    private JPanel panelInventory,Panel;
+    private JPanel panelInventory, Panel;
     private Font f1, f2;
-    private JButton  inventoryDeleteButton;
+    private JButton inventoryDeleteButton;
 
 
     private JTable inventoryTable;
@@ -207,23 +207,21 @@ public class Inventory {
     Sell sell;
 
 
-
     public Inventory(JFrame frame) {
-        this.frame=frame;
+        this.frame = frame;
         // buy=b;
         // sell=s;
         initComponents(Panel); // why do we need this?
         table_update_inventory();
     }
 
-    public JPanel initComponents(final JPanel mainPanel){
+    public JPanel initComponents(final JPanel mainPanel) {
 
-        this.Panel=mainPanel;
+        this.Panel = mainPanel;
 
         panelInventory = new JPanel();
         panelInventory.setLayout(null);
         panelInventory.setBackground(new Color(0xD9B9F2));
-
 
 
         f1 = new Font("Arial", Font.BOLD, 15);
@@ -241,10 +239,12 @@ public class Inventory {
                 DefaultTableModel d = (DefaultTableModel) inventoryTable.getModel();
                 int selectRow = inventoryTable.getSelectedRow();
                 String name = d.getValueAt(selectRow, 1).toString();
+                String qty=  d.getValueAt(selectRow,3).toString();
                 int warningMsg = JOptionPane.showConfirmDialog(frame, "Do you want to delete the product?", "DELETE", JOptionPane.YES_NO_OPTION);
 
                 if (warningMsg == JOptionPane.YES_OPTION) {
                     try {
+
                         String sql1 = "delete from PRODUCT where NAME=?";
 
                         OracleConnection oc1 = new OracleConnection();
@@ -274,7 +274,6 @@ public class Inventory {
         });
 
 
-
         inventoryTable = new JTable();
         inventoryModel = new DefaultTableModel();
         inventoryScrollPane = new JScrollPane(inventoryTable);
@@ -285,7 +284,7 @@ public class Inventory {
         inventoryTable.setSelectionBackground(Color.GRAY);
         inventoryTable.setRowHeight(30);
 
-        inventoryScrollPane.setBounds(150,350,1000,300);
+        inventoryScrollPane.setBounds(150, 350, 1000, 300);
         panelInventory.add(inventoryScrollPane);
 
 
@@ -295,10 +294,9 @@ public class Inventory {
     }
 
     public void table_update_inventory() {
-        System.out.println("table update inv executed");
         int n;
         try {
-            String sql = "select P_ID,NAME,max(MRP),sum(S_QUANTITY) from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME group by  P_ID,NAME";
+            String sql = "select P_ID,NAME,max(MRP),sum(S_QUANTITY) from PRODUCT , SUPPLY_ORDER where PRODUCT.S_NAME=SUPPLY_ORDER.S_NAME having sum(S_QUANTITY)>0 group by  P_ID,NAME order by NAME";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();
@@ -324,16 +322,17 @@ public class Inventory {
 
 
         } catch (Exception e) {
-            System.out.println(e+ " table_update_inventory");
-        }
-        finally {
+            System.out.println(e + " table_update_inventory");
+        } finally {
             try {
                 rs.close();
                 ps.close();
 
             } catch (SQLException e) {
-                System.out.println(e+" 1table_update_inventory");
+                System.out.println(e + " 1table_update_inventory");
             }
         }
     }
+
+
 }

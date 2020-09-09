@@ -28,6 +28,6 @@ public class OracleConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Thank you");
+       // System.out.println("Thank you");
     }
 }

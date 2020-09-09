@@ -1,6 +1,8 @@
 package OracleConnection;
 
 
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -18,9 +20,11 @@ public class Paybills {
 
     private JComboBox expenseComboBox;
     private JLabel expId, purpose, amount, date, description;//expense Paybills
-    private JTextField tfExpId, tfAmount, tfDate, tfDescription;//expense Paybills
+    private JTextField tfExpId, tfAmount, tfDescription;//expense Paybills
     private JButton expSaveButton, expDelButton, expAddButton;
     private static String[] purposes = {"Select an option", "Employee Salary", "Rent", "Utility Bills", "Others"};//expense list.
+
+    private JDateChooser dateChooser;
 
     private JTable expTable;
     private DefaultTableModel expModel;
@@ -102,10 +106,10 @@ public class Paybills {
         tfAmount.setFont(f1);
         panelPayBills.add(tfAmount);
 
-        tfDate = new JTextField();
-        tfDate.setBounds(550, 310, 200, 30);
-        tfDate.setFont(f1);
-        panelPayBills.add(tfDate);
+
+        dateChooser = new JDateChooser();
+        dateChooser.setBounds(550, 310, 200, 30); // Modify depending on your preference
+        panelPayBills.add(dateChooser);
 
         tfDescription = new JTextField();
         tfDescription.setBounds(550, 360, 200, 30);
@@ -127,8 +131,7 @@ public class Paybills {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Date sqlExpDate = getDate();
-
+                    Date sqlExpDate = convertJavaDateToSqlDate(dateChooser.getDate());
                     //purpose
                     String purpose = expenseComboBox.getSelectedItem().toString();
 
@@ -144,7 +147,6 @@ public class Paybills {
 
                     expenseTableAdd();
                     tfExpId.setText("");
-                    tfDate.setText("");
                     tfDescription.setText("");
                     tfAmount.setText("");
 
@@ -232,15 +234,17 @@ public class Paybills {
 
     private void expenseTableAdd() {
         //date
-        Date sqlExpDate = getDate();
+        Date sqlExpDate = convertJavaDateToSqlDate(dateChooser.getDate());
 
         DefaultTableModel d = (DefaultTableModel) expTable.getModel();
         d.addRow(new Object[]{expenseComboBox.getSelectedItem().toString(), Integer.parseInt(tfExpId.getText()),
                 Integer.parseInt(tfAmount.getText()), sqlExpDate, tfDescription.getText()});
     }
 
-    private Date getDate() {
-        String expDate = tfDate.getText();
-        return Date.valueOf(expDate);
+
+
+    private java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
     }
+
 }

@@ -24,7 +24,7 @@ public class Report {
     private DefaultTableModel buyModel, salesModel, expensesModel;
     private JScrollPane buyScrollPane, salesScrollPane, expensesScrollPane;
 
-    private String[] buyColumns = {"Product ID", "Name", "Supplier", "Date", "Buying price", "Quantity", "Unit Price", "Total"};
+    private String[] buyColumns = {"Product ID", "Name", "Supplier", "Date", "Buying price", "Quantity", "Unit MRP", "Total"};
     private String[] buyRows = new String[8];
 
     private String[] salesColumns = {"Date", "Product Name", "Seller", "Quantity", "MRP", "Total"};
@@ -232,7 +232,7 @@ public class Report {
             int monthNumber = getMonthNumber();
             int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
-            String sql = "select P_ID,SUPPLY_ORDER.S_NAME,SUPPLIER,SUP_DATE,S_PRICE,initial_qty,MRP, MRP*S_QUANTITY AS TOTAL FROM SUPPLY_ORDER,product" +
+            String sql = "select P_ID,SUPPLY_ORDER.S_NAME,SUPPLIER,SUP_DATE,S_PRICE,initial_qty,MRP, S_PRICE*initial_qty AS TOTAL FROM SUPPLY_ORDER,product" +
                     " where SUPPLY_ORDER.s_name=product.s_name and extract ( month from to_date(SUP_DATE,'yyyy-month-dd'))='" + monthNumber +
                     "' AND extract (year from to_date(SUP_DATE,'dd-mon-yy'))='" + yearName +
                     "' ORDER BY p_ID,SUPPLY_ORDER.S_NAME,SUP_DATE";
