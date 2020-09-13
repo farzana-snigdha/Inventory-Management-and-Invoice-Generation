@@ -24,6 +24,7 @@ public class Salary {
 
     private String[] salaryColumns = {"Id", "Designation", "Amount (taka)"};
     private String[] salaryRows = new String[3];
+    private JButton deleteButton;
 
     public Salary(JFrame frame) {
         this.frame = frame;
@@ -66,7 +67,7 @@ public class Salary {
             panel.add(tfUpdateAmount);
 
             updateButton = new JButton("Update"); // add an alert later
-            updateButton.setBounds(390, 320, 90, 25);
+            updateButton.setBounds(390, 380, 90, 25);
             updateButton.setBackground(new Color(0x7E0AB5));
             updateButton.setFont(f2);
             updateButton.addActionListener(new ActionListener() {
@@ -78,6 +79,7 @@ public class Salary {
             });
             panel.add(updateButton);
         }
+
         //add
 
         {
@@ -123,9 +125,6 @@ public class Salary {
             addButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-//                tfDesignationId.setText("");
-//                tfDesignationName.setText("");
-//                tfAmount.setText("");
                     try {
                         OracleConnection oc = new OracleConnection();
 
@@ -182,10 +181,46 @@ public class Salary {
         salaryTable.setBackground(Color.WHITE);
         salaryTable.setSelectionBackground(Color.GRAY);
         salaryTable.setRowHeight(30);
-
+        salaryTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        salaryTable.setAutoCreateRowSorter(true);
         salaryScrollPane.setBounds(150, 460, 1000, 200);
         panel.add(salaryScrollPane);
 
+        //remove item
+        {
+            deleteButton = new JButton("Delete"); // add an alert later
+            deleteButton.setBounds(550, 380, 90, 25);
+            deleteButton.setBackground(new Color(0x7E0AB5));
+            deleteButton.setFont(f2);
+            deleteButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int selectRow = salaryTable.getSelectedRow();
+                    String name = salaryModel.getValueAt(selectRow, 1).toString();
+                    int warningMsg = JOptionPane.showConfirmDialog(frame, "Do you want to delete it?", "DELETE", JOptionPane.YES_NO_OPTION);
+
+                    if (warningMsg == JOptionPane.YES_OPTION) {
+                        try {
+
+                            String sql1 = "delete from salary where designation=?";
+
+                            OracleConnection oc1 = new OracleConnection();
+                            PreparedStatement ps1 = oc1.conn.prepareStatement(sql1);
+
+                            ps1.setString(1, name);
+                            ps1.executeUpdate();
+
+                            salaryModel.removeRow(selectRow);
+
+                        } catch (Exception ex) {
+                            System.out.println(ex + " salary delete");
+                        }
+                    }
+
+                }
+            });
+            panel.add(deleteButton);
+        }
         designationInfoTable();
         chooseDesignation();
         return panel;
@@ -193,17 +228,17 @@ public class Salary {
     }
 
     private void salaryUpdate() {
-        try{
-            OracleConnection oc=new OracleConnection();
-            String sql="update salary set amount=? where designation=?";
-            PreparedStatement ps=oc.conn.prepareStatement(sql);
+        try {
+            OracleConnection oc = new OracleConnection();
+            String sql = "update salary set amount=? where designation=?";
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(tfUpdateAmount.getText()));
-            ps.setString(2,designationComboBox.getSelectedItem().toString());
+            ps.setString(2, designationComboBox.getSelectedItem().toString());
 
             ps.executeUpdate();
 
         } catch (Exception exception) {
-            System.out.println(exception+" update salary button");
+            System.out.println(exception + " update salary button");
         }
     }
 

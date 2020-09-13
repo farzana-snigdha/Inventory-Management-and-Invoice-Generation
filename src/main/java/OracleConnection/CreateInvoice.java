@@ -20,6 +20,8 @@ import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,30 +70,37 @@ public class CreateInvoice {
         cName.setBounds(200, 100, 150, 50);
         cName.setFont(f1);
         mainpanel.add(cName);
+
         mobile = new JLabel("Mobile no : ");
         mobile.setBounds(650, 100, 150, 50);
         mobile.setFont(f1);
         mainpanel.add(mobile);
+
         address = new JLabel("Address : ");
         address.setBounds(200, 150, 150, 50);
         address.setFont(f1);
         mainpanel.add(address);
+
         email = new JLabel("Email : ");
         email.setBounds(650, 150, 150, 50);
         email.setFont(f1);
         mainpanel.add(email);
+
         tfName = new JTextField();
         tfName.setBounds(350, 110, 200, 30);
         tfName.setFont(f1);
         mainpanel.add(tfName);
+
         tfmobile = new JTextField();
         tfmobile.setBounds(750, 110, 200, 30);
         tfmobile.setFont(f1);
         mainpanel.add(tfmobile);
+
         tfaddress = new JTextField();
         tfaddress.setBounds(350, 160, 200, 30);
         tfaddress.setFont(f1);
         mainpanel.add(tfaddress);
+
         tfemail = new JTextField();
         tfemail.setBounds(750, 160, 200, 30);
         tfemail.setFont(f1);
@@ -296,6 +305,7 @@ public class CreateInvoice {
                 mainpanel.setVisible(false);
             }
         });
+
         invoiceSerial = new JLabel("Invoice serial : ");
         invoiceSerial.setBounds(10, 10, 130, 40);
         invoiceSerial.setFont(f1);
@@ -304,6 +314,21 @@ public class CreateInvoice {
         tfserial = new JTextField();
         tfserial.setBounds(130, 15, 160, 30);
         tfserial.setFont(f1);
+        {
+            try{
+                String sql="select max(sale_id) from sales";
+                OracleConnection oc=new OracleConnection();
+                PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
+                ResultSet rs=preparedStatement.executeQuery();
+                while (rs.next()){
+                    tfserial.setText(rs.getString(1));
+                    System.out.println(rs.getString(1)+" opop");
+                }
+
+            } catch (Exception e) {
+                System.out.println(e+"  invoice serial");
+            }
+        }
         mainpanel.add(tfserial);
 
         invoiceGenerator = new JLabel("Created by :");

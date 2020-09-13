@@ -278,7 +278,7 @@ public class Sell {
                                 ps3.executeUpdate();
                             }
                             ps3.addBatch();
-                            inv.table_update_inventory();
+                            inv.updateInventoryTable();
                         }
 
 

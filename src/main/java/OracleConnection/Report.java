@@ -81,6 +81,8 @@ public class Report {
                 salesTable.setBackground(Color.WHITE);
                 salesTable.setSelectionBackground(Color.GRAY);
                 salesTable.setRowHeight(30);
+                salesTable.setAutoCreateRowSorter(true);
+
                 salesScrollPane.setBounds(200, 450, 1000, 300);
                 salesTable();
                 panel.add(salesScrollPane);
@@ -105,6 +107,7 @@ public class Report {
                 buyTable.setBackground(Color.WHITE);
                 buyTable.setSelectionBackground(Color.GRAY);
                 buyTable.setRowHeight(30);
+                buyTable.setAutoCreateRowSorter(true);
                 buyScrollPane.setBounds(200, 450, 1000, 300);
                 buyTable();
                 panel.add(buyScrollPane);
@@ -129,6 +132,7 @@ public class Report {
                 expensesTable.setBackground(Color.WHITE);
                 expensesTable.setSelectionBackground(Color.GRAY);
                 expensesTable.setRowHeight(30);
+                expensesTable.setAutoCreateRowSorter(true);
                 expensesScrollPane.setBounds(200, 450, 1000, 300);
                 expenseTable();
                 panel.add(expensesScrollPane);

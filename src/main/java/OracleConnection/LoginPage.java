@@ -12,12 +12,13 @@ public class LoginPage {
 
     private JFrame frame;
     private JPanel panel;
-    private JLabel userLabel, passLabel, regLabel;
+    private JLabel userLabel, passLabel;
     private Font f1, f2;
     private JTextField userNameField;
     private JPasswordField passwordField;
-    private JButton loginButton, registerButton;
+    private JButton loginButton;
     private static String uID;
+
 
 
     LoginPage(JFrame frame) {
