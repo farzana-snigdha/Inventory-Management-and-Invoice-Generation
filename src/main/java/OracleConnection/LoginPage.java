@@ -18,7 +18,7 @@ public class LoginPage {
     private JPasswordField passwordField;
     private JButton loginButton;
     private static String uID;
-
+    private Image img;
 
 
     LoginPage(JFrame frame) {
@@ -26,7 +26,7 @@ public class LoginPage {
         initComponents();
     }
 
-    private void initComponents() {
+    private void initComponents()  {
         //frame = new JFrame();
 
         panel = new JPanel();
