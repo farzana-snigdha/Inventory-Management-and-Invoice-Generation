@@ -305,21 +305,7 @@ public class CreateInvoice {
         invoiceSerialNumberTextField = new JTextField();
         invoiceSerialNumberTextField.setBounds(130, 15, 160, 30);
         invoiceSerialNumberTextField.setFont(f1);
-        {
-            try {
-                String sql = "select max(sale_id) from sales";
-                OracleConnection oc = new OracleConnection();
-                PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    invoiceSerialNumberTextField.setText(rs.getString(1));
-                    System.out.println(rs.getString(1) + " opop");
-                }
-
-            } catch (Exception e) {
-                System.out.println(e + "  invoice serial");
-            }
-        }
+        setInvoiceSerialNumber();
         invoiceSerialNumberTextField.setEditable(false);
         mainpanel.add(invoiceSerialNumberTextField);
 
@@ -336,22 +322,7 @@ public class CreateInvoice {
         invoiceGeneratorCreatedByTextField = new JTextField();
         invoiceGeneratorCreatedByTextField.setBounds(1150, 750, 200, 30);
         invoiceGeneratorCreatedByTextField.setFont(f1);
-        {
-            try{
-                String sql="select name from users where u_id='"+loginPage.getUID()+"'";
-                OracleConnection oc=new OracleConnection();
-                PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
-                ResultSet rs=preparedStatement.executeQuery();
-                while (rs.next()){
-
-                    invoiceGeneratorCreatedByTextField.setText(rs.getString(1));
-                 //   System.out.println(loginPage.getUID()+" opop");
-                }
-
-            } catch (Exception e) {
-                System.out.println(e+"  invoice serial");
-            }
-        }
+        setSellerName();
         invoiceGeneratorCreatedByTextField.setEditable(false);
         mainpanel.add(invoiceGeneratorCreatedByTextField);
 
@@ -369,22 +340,7 @@ public class CreateInvoice {
         netTotalTextField = new JTextField();
         netTotalTextField.setBounds(950, 670, 200, 30);
         netTotalTextField.setFont(f1);
-        {
-            try{
-                String sql="select sum(mrp*p_quantity) from supply_order,sales_details,sales,product where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
-                OracleConnection oc=new OracleConnection();
-                PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
-                ResultSet rs=preparedStatement.executeQuery();
-                while (rs.next()){
-
-                    netTotalTextField.setText(rs.getString(1));
-                    //   System.out.println(loginPage.getUID()+" opop");
-                }
-
-            } catch (Exception e) {
-                System.out.println(e+"  invoice serial");
-            }
-        }
+        setNetTotalValue();
         netTotalTextField.setEditable(false);
         mainpanel.add(netTotalTextField);
 
@@ -401,6 +357,55 @@ public class CreateInvoice {
         int ysize = (int) toolkit.getScreenSize().getHeight();
         frame.setSize(xsize, ysize);
 
+    }
+
+    private void setInvoiceSerialNumber() {
+        try {
+            String sql = "select max(sale_id) from sales";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                invoiceSerialNumberTextField.setText(rs.getString(1));
+                System.out.println(rs.getString(1) + " opop");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e + "  setInvoiceSerialNumber");
+        }
+    }
+
+    private void setSellerName() {
+        try{
+            String sql="select name from users where u_id='"+loginPage.getUID()+"'";
+            OracleConnection oc=new OracleConnection();
+            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
+            ResultSet rs=preparedStatement.executeQuery();
+            while (rs.next()){
+
+                invoiceGeneratorCreatedByTextField.setText(rs.getString(1));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e+"  setSellerName");
+        }
+    }
+
+    private void setNetTotalValue() {
+        try{
+            String sql="select sum(mrp*p_quantity) from supply_order,sales_details,sales,product where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
+            OracleConnection oc=new OracleConnection();
+            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
+            ResultSet rs=preparedStatement.executeQuery();
+            while (rs.next()){
+
+                netTotalTextField.setText(rs.getString(1));
+                //   System.out.println(loginPage.getUID()+" opop");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e+"  invoice serial");
+        }
     }
 
 }
