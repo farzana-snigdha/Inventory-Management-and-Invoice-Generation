@@ -276,7 +276,7 @@ public class Salary {
         int n;
         try {
             OracleConnection oc = new OracleConnection();
-            String sql = "select SAL_ID, DESIGNATION, AMOUNT from SALARY";
+            String sql = "select SAL_ID, DESIGNATION, AMOUNT from SALARY order by sal_id";
             PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsd = rs.getMetaData();

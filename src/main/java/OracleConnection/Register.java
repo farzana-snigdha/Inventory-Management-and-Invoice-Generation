@@ -339,7 +339,7 @@ initComponents();
         pokpokLabel.setText(s);
     }
 
-    private void chooseDesignation() {
+    public void chooseDesignation() {
         try {
             String sql = "select * from SALARY";
             OracleConnection oc1 = new OracleConnection();

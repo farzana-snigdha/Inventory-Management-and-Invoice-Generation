@@ -24,8 +24,8 @@ public class Report {
     private DefaultTableModel buyModel, salesModel, expensesModel;
     private JScrollPane buyScrollPane, salesScrollPane, expensesScrollPane;
 
-    int totalBill=0;
-    int totalBuy=0;
+    int totalBill = 0;
+    int totalBuy = 0;
 
     private String[] buyColumns = {"Product ID", "Name", "Supplier", "Date", "Buying price", "Quantity", "Unit MRP", "Total"};
     private String[] buyRows = new String[8];
@@ -37,6 +37,9 @@ public class Report {
     private String[] expensesRows = new String[5];
 
     private static String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};//month list.
+    private JLabel totalLabel;
+    private JTextField totalTextField, totalBuyTF, totalPayBillsTf;
+    private Font f3;
 
 
     public Report(JFrame frame) {
@@ -58,6 +61,7 @@ public class Report {
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 16);
+        f3 = new Font("Arial", Font.BOLD, 18);
 
 
         JLabel head = new JLabel("Report");
@@ -102,6 +106,15 @@ public class Report {
         expensesTable.setAutoCreateRowSorter(true);
         expensesScrollPane.setBounds(200, 450, 1000, 300);
 
+        totalLabel = new JLabel("TOTAL : ");
+        totalLabel.setBounds(850, 770, 150, 50);
+        totalLabel.setFont(f3);
+
+        totalTextField = new JTextField();
+        totalTextField.setBounds(950, 780, 200, 30);
+        totalTextField.setFont(f2);
+
+
         labelTotalExpense = new JLabel("Net Expense : ");
         labelTotalExpense.setBounds(450, 450, 150, 50);
         labelTotalExpense.setFont(f2);
@@ -141,7 +154,13 @@ public class Report {
                 salesYearComboFillUp();
                 setSalesReport();
                 panel.add(salesScrollPane);
+                panel.add(totalLabel);
+                panel.add(totalTextField);
+                totalTextField.setText(String.valueOf(setTotalSales()));
                 setSummaryInfoVisibility(false);
+
+                totalTextField.setEditable(false);
+
 
             }
         });
@@ -161,7 +180,13 @@ public class Report {
                 buyYearComboFillUp();
                 setBuyReport();
                 panel.add(buyScrollPane);
+                panel.add(totalLabel);
+                panel.add(totalTextField);
                 setSummaryInfoVisibility(false);
+                totalTextField.setText(String.valueOf(getTotalBuy()));
+                totalTextField.setEditable(false);
+
+
             }
         });
         panel.add(rbuy);
@@ -181,6 +206,10 @@ public class Report {
                 expenseYearComboFillUp();
                 setExpenseReport();
                 panel.add(expensesScrollPane);
+                panel.add(totalTextField);
+                panel.add(totalLabel);
+                totalTextField.setText(String.valueOf(getTotalPayBill()));
+                totalTextField.setEditable(false);
                 setSummaryInfoVisibility(false);
             }
         });
@@ -198,10 +227,12 @@ public class Report {
                 panel.remove(buyScrollPane);
                 panel.remove(salesScrollPane);
                 setSummaryInfoVisibility(true);
+                totalLabel.setVisible(false);
+                totalTextField.setVisible(false);
                 panel.updateUI();
                 summaryYearComboFillUp();
                 summaryInfoPanelAdd();
-setSummaryDetails();
+                setSummaryDetails();
 
             }
         });
@@ -355,7 +386,7 @@ setSummaryDetails();
 
         totalSalesTF.setText(String.valueOf(setTotalSales()));
         totalExpenseTF.setText(String.valueOf(setTotalExpense()));
-        netIncomeTF.setText(String.valueOf(setTotalSales()-setTotalExpense()));
+        netIncomeTF.setText(String.valueOf(setTotalSales() - setTotalExpense()));
         totalSalesTF.setEditable(false);
         totalExpenseTF.setEditable(false);
         netIncomeTF.setEditable(false);
@@ -369,24 +400,24 @@ setSummaryDetails();
             OracleConnection oc = new OracleConnection();
             String sql = "select sum(sd.p_quantity*so.mrp) from sales_details sd,supply_order so,sales,product  " +
                     "where sales.sale_id=sd.sale_id AND SD.P_ID =PRODUCT.P_ID AND PRODUCT.S_ID=SO.S_ID " +
-                    "and extract (month from to_date(sales.SALE_DATE,'yyyy-month-dd'))='"+monthNumber+"'" +
-                    "AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName +"'" +
+                    "and extract (month from to_date(sales.SALE_DATE,'yyyy-month-dd'))='" + monthNumber + "'" +
+                    "AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName + "'" +
                     " having sum(sd.p_quantity*so.mrp)=(select sum(sum(sd.p_quantity*so.mrp))  " +
-                                "from sales_details sd,supply_order so,sales,product " +
-                                " where sales.sale_id=sd.sale_id and SD.P_ID =PRODUCT.P_ID " +
-                                "AND PRODUCT.S_ID=SO.S_ID and extract (month from to_date(sales.SALE_DATE,'yyyy-month-dd'))='"+monthNumber+"'" +
-                                "AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName +"'" +
-                                " group by (sd.p_quantity*so.mrp)) ";
+                    "from sales_details sd,supply_order so,sales,product " +
+                    " where sales.sale_id=sd.sale_id and SD.P_ID =PRODUCT.P_ID " +
+                    "AND PRODUCT.S_ID=SO.S_ID and extract (month from to_date(sales.SALE_DATE,'yyyy-month-dd'))='" + monthNumber + "'" +
+                    "AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName + "'" +
+                    " group by (sd.p_quantity*so.mrp)) ";
 
-           PreparedStatement ps = oc.conn.prepareStatement(sql);
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-           while (rs.next()){
-                toatlSales=rs.getInt(1);
+            while (rs.next()) {
+                toatlSales = rs.getInt(1);
 
-           }
+            }
 
         } catch (Exception e) {
-            System.out.println(e+"  summary details");
+            System.out.println(e + "  summary details");
         }
         return toatlSales;
 
@@ -396,30 +427,30 @@ setSummaryDetails();
         int toatlExpense = 0;
 
         totalBill = getTotalPayBill();
-        totalBuy=getTotalBuy();
-        toatlExpense=totalBill+totalBuy;
+        totalBuy = getTotalBuy();
+        toatlExpense = totalBill + totalBuy;
         return toatlExpense;
 
     }
 
     private int getTotalBuy() {
-        try{
+        try {
             int monthNumber = getMonthNumber();
             int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
             OracleConnection oc2 = new OracleConnection();
-            String sql2 ="select sum(s_price*initial_qty) from supply_order where " +
-                    "extract (month from to_date(supply_order.Sup_DATE,'yyyy-month-dd'))='"+monthNumber+"'"+
-                    "AND extract (year from to_date(supply_order.Sup_DATE,'dd-mon-yy'))='" + yearName +"'";
+            String sql2 = "select sum(s_price*initial_qty) from supply_order where " +
+                    "extract (month from to_date(supply_order.Sup_DATE,'yyyy-month-dd'))='" + monthNumber + "'" +
+                    "AND extract (year from to_date(supply_order.Sup_DATE,'dd-mon-yy'))='" + yearName + "'";
 
             PreparedStatement ps2 = oc2.conn.prepareStatement(sql2);
             ResultSet rs2 = ps2.executeQuery();
-            while (rs2.next()){
-                totalBuy=rs2.getInt(1);
+            while (rs2.next()) {
+                totalBuy = rs2.getInt(1);
 
             }
         } catch (Exception e) {
-            System.out.println(e+"  getTotalBuy");
+            System.out.println(e + "  getTotalBuy");
         }
         return totalBuy;
     }
@@ -440,8 +471,8 @@ setSummaryDetails();
                 totalBill = rs1.getInt(1);
 
             }
-        }catch (Exception e) {
-            System.out.println(e+"  getTotalPayBill");
+        } catch (Exception e) {
+            System.out.println(e + "  getTotalPayBill");
         }
         return totalBill;
     }
@@ -551,4 +582,9 @@ setSummaryDetails();
         }
     }
 
+  /*  public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        Report report = new Report(frame);
+        report.initComponents();
+    }*/
 }
