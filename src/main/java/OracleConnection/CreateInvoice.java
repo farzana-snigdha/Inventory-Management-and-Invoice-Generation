@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -153,27 +154,42 @@ public class CreateInvoice {
                         Document document = new Document();
                         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "Invoice.pdf")));
                         document.open();
+                        String company_Name = null,companyAddress = null,contactNumber = null;
 
-                        Paragraph p1 = new Paragraph("Company Name");
-                        Paragraph p2 = new Paragraph("Address");
-                        Paragraph p3 = new Paragraph("042-35712296");
+                        try {
+                            String sql="select * from company_info";
+                            OracleConnection oc=new OracleConnection();
+                            PreparedStatement ps=oc.conn.prepareStatement(sql);
+                            ResultSet rs=ps.executeQuery();
+                            while (rs.next()){
+                                company_Name=rs.getString(1);
+                                companyAddress=rs.getString(2);
+                                contactNumber=rs.getString(3);
+                            }
+
+                        } catch (SQLException throwables) {
+                            System.out.println(throwables+" create invoice company info");                        }
+
+                        Paragraph companyName = new Paragraph(company_Name);
+                        Paragraph address = new Paragraph(companyAddress);
+                        Paragraph contactNum = new Paragraph(contactNumber);
                         Paragraph p5 = new Paragraph("Thank you for visiting us…!!\nReturn/Exchange not possible with-out bill\n\n\n\n\n");
 
 
-                        p1.setAlignment(Element.ALIGN_CENTER);
-                        p3.setAlignment(Element.ALIGN_CENTER);
-                        p2.setAlignment(Element.ALIGN_CENTER);
+                        companyName.setAlignment(Element.ALIGN_CENTER);
+                        contactNum.setAlignment(Element.ALIGN_CENTER);
+                        address.setAlignment(Element.ALIGN_CENTER);
                         p5.setAlignment(Element.ALIGN_CENTER);
-                        document.add(p1);
-                        document.add(p2);
-                        document.add(p3);
+                        document.add(companyName);
+                        document.add(address);
+                        document.add(contactNum);
                         document.add(p5);
 
                         Phrase phrase = new Phrase("Time/Date: " + dateFormat.format(date));
                         PdfContentByte canvas = writer.getDirectContent();
                         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase, 40, 800, 0);
 
-                        Paragraph phrase1 = new Paragraph("CustomerName :" + tfName.getText());
+                        Paragraph phrase1 = new Paragraph("Customer Name :" + tfName.getText());
                         phrase1.setIndentationLeft(30f);
                         document.add(phrase1);
 
@@ -340,6 +356,7 @@ public class CreateInvoice {
         companyNameTextField = new JTextField();
         companyNameTextField.setBounds(1150, 800, 200, 30);
         companyNameTextField.setFont(f1);
+        setCompanyName();
         mainpanel.add(companyNameTextField);
 
         netTotalLabel = new JLabel("Net Total : ");
@@ -399,6 +416,22 @@ public class CreateInvoice {
 
         } catch (Exception e) {
             System.out.println(e+"  setSellerName");
+        }
+    }
+
+    private void setCompanyName() {
+        try{
+            String sql="select name from company_info";
+            OracleConnection oc=new OracleConnection();
+            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
+            ResultSet rs=preparedStatement.executeQuery();
+            while (rs.next()){
+
+                companyNameTextField.setText(rs.getString(1));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e+"  setCompanyName");
         }
     }
 

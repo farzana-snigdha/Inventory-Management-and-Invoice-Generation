@@ -74,6 +74,7 @@ public class Salary {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     salaryUpdate();
+                    tfUpdateAmount.setText("");
                     designationInfoTable();
                 }
             });
