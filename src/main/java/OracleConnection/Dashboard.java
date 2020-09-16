@@ -10,7 +10,7 @@ public class Dashboard {
     private JFrame frame;
     private JPanel mainPanel, scrollPanel,logOutPanel;
     private Font f1, f2;
-    private JTabbedPane tabbedPane;
+    public JTabbedPane tabbedPane;
     private JScrollPane scrollPane;
 
     Dashboard(JFrame frame) {

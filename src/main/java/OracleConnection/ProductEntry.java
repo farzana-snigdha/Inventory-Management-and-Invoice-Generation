@@ -1,6 +1,5 @@
 package OracleConnection;
 
-
 /// adding new category
 
 import javax.swing.*;
@@ -43,6 +42,7 @@ public class ProductEntry {
         panel.add(productName);
 
 
+
         tfProductId = new JTextField();
         tfProductId.setBounds(600, 210, 250, 30);
         tfProductId.setFont(f1);
@@ -54,15 +54,16 @@ public class ProductEntry {
         panel.add(tfProductName);
 
 
+
         backButton = new JButton("Back");
         backButton.setBounds(720, 400, 70, 25);
         backButton.setBackground(new Color(0x7E0AB5));
-        backButton.setForeground(new Color(0xFEFEFE));
         backButton.setFont(f2);
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Dashboard(frame);
+                Dashboard dashboard = new Dashboard(frame);
+                dashboard.tabbedPane.setSelectedIndex(1);
                 panel.setVisible(false);
             }
         });
@@ -71,7 +72,6 @@ public class ProductEntry {
         addButton = new JButton("Save");
         addButton.setBounds(620, 400, 70, 25);
         addButton.setBackground(new Color(0x7E0AB5));
-        addButton.setForeground(new Color(0xFEFEFE));
         addButton.setFont(f2);
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -82,12 +82,15 @@ public class ProductEntry {
                     String sql1 = "insert into PRODUCT (P_ID, NAME, S_NAME) values(?, ?, ?)";
 
 
+
                     PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
 
                     ps1.setInt(1, Integer.parseInt(tfProductId.getText()));
                     ps1.setString(2, tfProductName.getText());
-                    ps1.setString(3, tfProductName.getText());
+                    ps1.setString(3,tfProductName.getText());
                     int x = ps1.executeUpdate();
+
+                    oc.conn.commit();
 
                     tfProductId.setText("");
                     tfProductName.setText("");
@@ -99,9 +102,8 @@ public class ProductEntry {
                         JOptionPane.showMessageDialog(frame, "input valid info");
                     }
                 } catch (Exception d) {
-                    System.out.println(d + " product table");
+                    System.out.println(d);
                 }
-
             }
         });
         panel.add(addButton);

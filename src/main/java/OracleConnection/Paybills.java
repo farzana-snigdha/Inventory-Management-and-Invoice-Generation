@@ -69,6 +69,9 @@ public class Paybills {
                             tfAmount.setText(String.valueOf(rs.getInt("TOTAL")));
                         }
                     }
+                    else{
+                        tfAmount.setText("");
+                    }
 
                 } catch (Exception ex) {
                     System.out.println(ex);
@@ -161,11 +164,13 @@ public class Paybills {
 
 
                     expenseTableAdd();
-                    clearTextField();
+                    tfExpId.setText("");
+                    tfDescription.setText("");
+                    tfAmount.setText("");
+
+                    expenseComboBox.requestFocus();
 
                 } catch (Exception eq) {
-                    JOptionPane.showMessageDialog(frame,"Insert Valid Expense ID");
-                    clearTextField();
                     System.out.println(eq);
                 } finally {
                     try {
@@ -229,14 +234,6 @@ public class Paybills {
 
         return panelPayBills;
 
-    }
-
-    private void clearTextField() {
-        tfExpId.setText("");
-        tfDescription.setText("");
-        tfAmount.setText("");
-
-        expenseComboBox.requestFocus();
     }
 
     private void expenseTableAdd() {
