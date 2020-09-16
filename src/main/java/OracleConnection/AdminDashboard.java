@@ -31,11 +31,24 @@ public class AdminDashboard {
         frame.setSize(xsize, ysize);
 
 
+
         tabbedPane = new JTabbedPane();
         tabbedPane.setBounds(0, 0, xsize, ysize);
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         tabbedPane.setFont(f1);
         mainPanel.add(tabbedPane);
+
+        /*tabbedPane.setUI(new BasicTabbedPaneUI() {
+            @Override
+            protected int calculateTabWidth(
+                    int tabPlacement, int tabIndex, FontMetrics metrics) {
+                return 200;// the width of the tab
+            }
+        });
+*/
+
+
+
 
         Inventory inventory = new Inventory(frame);
         Paybills paybills = new Paybills(frame);
