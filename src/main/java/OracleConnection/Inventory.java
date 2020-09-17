@@ -18,7 +18,7 @@ public class Inventory {
     private Font f1, f2;
     private JButton inventoryDeleteButton;
 
-
+GradientPanel gradientPanel;
     private JTable inventoryTable;
     private DefaultTableModel inventoryModel;
     private JScrollPane inventoryScrollPane;
@@ -34,6 +34,7 @@ public class Inventory {
 
     public Inventory(JFrame frame) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
 
         initComponents(Panel);
         updateInventoryTable();
@@ -43,7 +44,7 @@ public class Inventory {
 
         this.Panel = mainPanel;
 
-        panelInventory = new JPanel();
+        panelInventory = gradientPanel.setGradientPanel();
         panelInventory.setLayout(null);
         panelInventory.setBackground(new Color(0xD9B9F2));
 

@@ -25,14 +25,16 @@ public class Salary {
     private String[] salaryColumns = {"Id", "Designation", "Amount (taka)"};
     private String[] salaryRows = new String[3];
     private JButton deleteButton;
+    GradientPanel gradientPanel;
 
     public Salary(JFrame frame) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
     }
 
     public JPanel initComponents() {
 
-        panel = new JPanel();
+        panel = gradientPanel.setGradientPanel();
         panel.setLayout(null);
         panel.setBackground(new Color(0xD9B9F2));
 

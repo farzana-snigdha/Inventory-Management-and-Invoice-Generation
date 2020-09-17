@@ -26,13 +26,13 @@ public class Buy {
     ResultSet rs;
     Inventory inv;
     Sell sell;
-
+GradientPanel gradientPanel;
     public Buy(JFrame frame, Inventory i, Sell s) {
         this.frame = frame;
         inv = i;
         sell = s;
         inv.updateInventoryTable();
-
+gradientPanel=new GradientPanel(frame);
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
@@ -40,7 +40,7 @@ public class Buy {
 
         this.Panel = mainPanel;
 
-        panelBuy = new JPanel();
+        panelBuy = gradientPanel.setGradientPanel();
         panelBuy.setLayout(null);
         panelBuy.setBackground(new Color(0xD9B9F2));
 

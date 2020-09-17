@@ -56,10 +56,11 @@ public class Sell {
             return name;
         }
     }
-
+GradientPanel gradientPanel;
 
     Sell(JFrame frame, Inventory i) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
         inv = i;
     }
 
@@ -67,7 +68,7 @@ public class Sell {
 
         this.Panel = mainPanel;
 
-        panelSell = new JPanel();
+        panelSell = gradientPanel.setGradientPanel();
         panelSell.setLayout(null);
         panelSell.setBackground(new Color(0xD9B9F2));
 

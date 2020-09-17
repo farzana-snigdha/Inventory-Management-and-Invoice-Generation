@@ -16,15 +16,17 @@ public class ProductEntry {
     private JTextField tfProductId, tfProductName;
     private Font f1, f2;
     private JButton addButton, backButton;
+    GradientPanel gradientPanel;
 
     ProductEntry(JFrame frame) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
         initComponents();
     }
 
     private void initComponents() {
 
-        panel = new JPanel();
+        panel = gradientPanel.setGradientPanel();
         panel.setLayout(null);
         panel.setBackground(new Color(0xD9B9F2));
 

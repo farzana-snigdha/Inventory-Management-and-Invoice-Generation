@@ -18,17 +18,18 @@ public class LoginPage {
     private JPasswordField passwordField;
     private JButton loginButton;
     private static String uID;
-
+GradientPanel gradientPanel;
 
     LoginPage(JFrame frame) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
         initComponents();
     }
 
     private void initComponents() {
         //frame = new JFrame();
 
-        panel = new JPanel();
+        panel = gradientPanel.setGradientPanel();
         panel.setLayout(null);
         panel.setBackground(Color.lightGray);
 
@@ -58,7 +59,8 @@ public class LoginPage {
         passwordField.setFont(f2);
         panel.add(passwordField);
 
-        loginButton = new JButton("Login");
+       loginButton = new JButton();
+        loginButton.setText("login");
         loginButton.setBounds(630, 360, 80, 30);
         loginButton.setBackground(new Color(0x7E0AB5));
         loginButton.setFont(f2);

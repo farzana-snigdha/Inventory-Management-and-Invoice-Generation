@@ -37,9 +37,12 @@ public class Register {
     private JLabel companyNameLabel,companyAddressLabel,contactNumberLabel;
     private JTextField companyNameTextField,contactNumberTextField;
     private JTextArea companyAddressTextArea;
+    GradientPanel gradientPanel;
 
     Register(JFrame frame) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
+
 /*
 initComponents();
 */
@@ -49,7 +52,7 @@ initComponents();
     public JPanel initComponents() {
 
 
-        registerPanel = new JPanel();
+        registerPanel = gradientPanel.setGradientPanel();
         registerPanel.setLayout(null);
         registerPanel.setBackground(new Color(0xD9B9F2));
 

@@ -36,16 +36,19 @@ public class Paybills {
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
+    GradientPanel gradientPanel;
 
     Paybills(JFrame frame) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
+
     }
 
     public JPanel initComponents(JPanel mainPanel) {
 
         this.panel = mainPanel;
 
-        panelPayBills = new JPanel();
+        panelPayBills = gradientPanel.setGradientPanel();
         panelPayBills.setLayout(null);
         panelPayBills.setBackground(new Color(0xD9B9F2));
 

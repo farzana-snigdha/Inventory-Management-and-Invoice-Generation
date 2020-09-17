@@ -45,10 +45,11 @@ public class CreateInvoice {
     LoginPage loginPage;
     private JLabel netTotalLabel;
     private JTextField netTotalTextField;
-
+GradientPanel gradientPanel;
 
     public CreateInvoice(JFrame frame) {
         this.frame = frame;
+        gradientPanel=new GradientPanel(frame);
         initComponents();
 
     }
@@ -57,7 +58,7 @@ public class CreateInvoice {
         //frame = new JFrame();
 
 
-        mainpanel = new JPanel();
+        mainpanel = gradientPanel.setGradientPanel();
         mainpanel.setLayout(null);
         mainpanel.setBackground(new Color(0xD9B9F2));
         //mainpanel.setBackground(Color.lightGray);
