@@ -58,7 +58,7 @@ public class Report {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(0xD9B9F2));
+        panel.setBackground(new Color(0xA66BD4));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.PLAIN, 18);
@@ -69,7 +69,7 @@ public class Report {
         showReportLabel(head, "REPORT");
 
         head.setHorizontalAlignment(SwingConstants.CENTER);
-        head.setFont(new Font("Lato Medium", Font.PLAIN, 40));
+        head.setFont(new Font("Lato Medium", Font.BOLD, 40));
         head.setBounds(450, 0, 600, 70);
         panel.add(head);
 
@@ -146,7 +146,8 @@ public class Report {
 
         rsales = new JButton("Sales");
         rsales.setBounds(50, 330, 120, 30);
-        rsales.setBackground(Color.cyan);
+        rsales.setForeground(Color.WHITE);
+        rsales.setBackground(new Color(0x7E0AB5));
         rsales.setFont(f2);
         rsales.addActionListener(new ActionListener() {
             @Override
@@ -172,7 +173,8 @@ public class Report {
 
         rbuy = new JButton("Buy");
         rbuy.setBounds(50, 280, 120, 30);
-        rbuy.setBackground(Color.cyan);
+        rbuy.setForeground(Color.WHITE);
+        rbuy.setBackground(new Color(0x7E0AB5));
         rbuy.setFont(f2);
         rbuy.addActionListener(new ActionListener() {
             @Override
@@ -199,7 +201,8 @@ public class Report {
 
         rexpenses = new JButton("Expenses");
         rexpenses.setBounds(50, 380, 120, 30);
-        rexpenses.setBackground(Color.cyan);
+        rexpenses.setForeground(Color.WHITE);
+        rexpenses.setBackground(new Color(0x7E0AB5));
         rexpenses.setFont(f2);
         rexpenses.addActionListener(new ActionListener() {
             @Override
@@ -225,7 +228,8 @@ public class Report {
 
         summary = new JButton("Summary");
         summary.setBounds(50, 230, 120, 30);
-        summary.setBackground(Color.cyan);
+        summary.setForeground(Color.WHITE);
+        summary.setBackground(new Color(0x7E0AB5));
         summary.setFont(f2);
 
         summary.addActionListener(new ActionListener() {
@@ -282,6 +286,8 @@ showReportLabel(head, "SUMMARY");
     }
 
     private void showReportLabel(JLabel Label, String s) {
+        head.setForeground(Color.white);
+
         head.setText(s);
 
     }

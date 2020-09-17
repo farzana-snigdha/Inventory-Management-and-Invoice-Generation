@@ -46,7 +46,7 @@ public class AdminDashboard {
         final Register register=new Register(frame);
         logOutPanel= new JPanel();
         logOutPanel.setLayout(null);
-        logOutPanel.setBackground(new Color(0xD9B9F2));
+        logOutPanel.setBackground(new Color(0xA66BD4));
 
 
 

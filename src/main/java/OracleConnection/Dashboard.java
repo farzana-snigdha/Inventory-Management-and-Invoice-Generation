@@ -45,7 +45,7 @@ public class Dashboard {
         final Buy buy = new Buy(frame, inventory,sell);
         logOutPanel= new JPanel();
         logOutPanel.setLayout(null);
-        logOutPanel.setBackground(new Color(0xD9B9F2));
+        logOutPanel.setBackground(new Color(0xA66BD4));
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));

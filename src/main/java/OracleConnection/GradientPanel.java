@@ -18,7 +18,7 @@ public class GradientPanel {
 
                     Paint p =
                             new GradientPaint(0.0f, 0.0f, new Color(217, 185, 242, 255),
-                                    getWidth(), getHeight(), new Color(86, 8, 147, 255), true);
+                                    getWidth()/2, getHeight()/2, new Color(118, 28, 187, 255), true);
                     Graphics2D g2d = (Graphics2D) g;
                     g2d.setPaint(p);
                     g2d.fillRect(0, 0, getWidth(), getHeight());

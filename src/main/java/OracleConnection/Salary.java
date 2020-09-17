@@ -70,6 +70,7 @@ public class Salary {
 
             updateButton = new JButton("Update"); // add an alert later
             updateButton.setBounds(390, 380, 90, 25);
+            updateButton.setForeground(Color.WHITE);
             updateButton.setBackground(new Color(0x7E0AB5));
             updateButton.setFont(f2);
             updateButton.addActionListener(new ActionListener() {
@@ -123,6 +124,7 @@ public class Salary {
 
             addButton = new JButton("Save");
             addButton.setBounds(900, 380, 70, 25);
+            addButton.setForeground(Color.WHITE);
             addButton.setBackground(new Color(0x7E0AB5));
             addButton.setFont(f2);
             addButton.addActionListener(new ActionListener() {
@@ -193,6 +195,7 @@ public class Salary {
         {
             deleteButton = new JButton("Delete"); // add an alert later
             deleteButton.setBounds(550, 380, 90, 25);
+            deleteButton.setForeground(Color.WHITE);
             deleteButton.setBackground(new Color(0x7E0AB5));
             deleteButton.setFont(f2);
             deleteButton.addActionListener(new ActionListener() {
