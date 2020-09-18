@@ -21,7 +21,7 @@ public class AdminDashboard {
     private void initComponents() {
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        mainPanel.setBackground(new Color(0x7E0AB5));
+        mainPanel.setBackground(new Color(0x556B2F));
 
         f1 = new Font("Arial",Font.PLAIN, 20);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -37,6 +37,7 @@ public class AdminDashboard {
         tabbedPane.setBounds(0, 0, xsize, ysize);
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         tabbedPane.setFont(f1);
+        tabbedPane.setBackground(new Color(0x77A033));
         mainPanel.add(tabbedPane);
 
         Inventory inventory = new Inventory(frame);
@@ -44,9 +45,9 @@ public class AdminDashboard {
         Report report = new Report(frame);
         Salary salary =new Salary(frame);
         final Register register=new Register(frame);
-        logOutPanel= new JPanel();
+   /*     logOutPanel= new JPanel();
         logOutPanel.setLayout(null);
-        logOutPanel.setBackground(new Color(0xA66BD4));
+        logOutPanel.setBackground(new Color(0xA66BD4));*/
 
 
 

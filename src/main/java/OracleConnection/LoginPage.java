@@ -18,24 +18,23 @@ public class LoginPage {
     private JPasswordField passwordField;
     private JButton loginButton;
     private static String uID;
-GradientPanel gradientPanel;
+    BackgroundColor backgroundColor;
 
     LoginPage(JFrame frame) {
         this.frame = frame;
-        gradientPanel=new GradientPanel(frame);
+        backgroundColor = new BackgroundColor(frame);
         initComponents();
     }
 
     private void initComponents() {
-        //frame = new JFrame();
 
-        panel = gradientPanel.setGradientPanel();
+        panel = backgroundColor.setGradientPanel();
         panel.setLayout(null);
         panel.setBackground(Color.lightGray);
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
-        panel.setBackground(new Color(0xD9B9F2));
+
         userLabel = new JLabel();
         userLabel.setText("Username : ");
         userLabel.setBounds(500, 250, 150, 50);
@@ -59,10 +58,10 @@ GradientPanel gradientPanel;
         passwordField.setFont(f2);
         panel.add(passwordField);
 
-       loginButton = new JButton();
+        loginButton = new JButton();
         loginButton.setText("login");
         loginButton.setBounds(630, 360, 80, 30);
-        loginButton.setBackground(new Color(0x7E0AB5));
+        backgroundColor.setButtonColor(loginButton);
         loginButton.setFont(f2);
         loginButton.setForeground(new Color(0xFEFEFE));
 
@@ -77,10 +76,10 @@ GradientPanel gradientPanel;
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
                         uID = String.valueOf(rs.getInt("U_ID"));
-                        String designation=rs.getString("designation");
+                        String designation = rs.getString("designation");
                         // System.out.println(uID);
 
-                        if (designation.equals("admin")||designation.equals("ADMIN")||designation.equals("Admin")) {
+                        if (designation.equals("admin") || designation.equals("ADMIN") || designation.equals("Admin")) {
 
                             new AdminDashboard(frame);
                         } else {
@@ -120,6 +119,7 @@ GradientPanel gradientPanel;
 
 
 
+
     public static String getUID() {
         System.out.println(uID);
         return uID;
@@ -129,26 +129,25 @@ GradientPanel gradientPanel;
     public static void main(String[] args) {
         int count;
         JFrame frame = new JFrame();
-        try{
-            String sql="select count(u_id) from users";
-            OracleConnection oc=new OracleConnection();
-            PreparedStatement ps=oc.conn.prepareStatement(sql);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
-                count=rs.getInt(1);
+        try {
+            String sql = "select count(u_id) from users";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement ps = oc.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
                 System.out.println(count);
-                if(count==0) {
+                if (count == 0) {
 
-                    Register register=   new Register(frame);
+                    Register register = new Register(frame);
                     register.initComponents();
 
-                }
-                else new LoginPage(frame);
+                } else new LoginPage(frame);
             }
 
 
         } catch (Exception e) {
-            System.out.println(e +"  login drama");
+            System.out.println(e + "  login drama");
         }
     }
 }

@@ -16,19 +16,18 @@ public class ProductEntry {
     private JTextField tfProductId, tfProductName;
     private Font f1, f2;
     private JButton addButton, backButton;
-    GradientPanel gradientPanel;
+    BackgroundColor backgroundColor;
 
     ProductEntry(JFrame frame) {
         this.frame = frame;
-        gradientPanel=new GradientPanel(frame);
+        backgroundColor =new BackgroundColor(frame);
         initComponents();
     }
 
     private void initComponents() {
 
-        panel = gradientPanel.setGradientPanel();
+        panel = backgroundColor.setGradientPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(0xD9B9F2));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -59,7 +58,7 @@ public class ProductEntry {
 
         backButton = new JButton("Back");
         backButton.setBounds(720, 400, 70, 25);
-        backButton.setBackground(new Color(0x7E0AB5));
+        backgroundColor.setButtonColor(backButton);
         backButton.setFont(f2);
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -73,7 +72,7 @@ public class ProductEntry {
 
         addButton = new JButton("Save");
         addButton.setBounds(620, 400, 70, 25);
-        addButton.setBackground(new Color(0x7E0AB5));
+        backgroundColor.setButtonColor(addButton);
         addButton.setFont(f2);
         addButton.addActionListener(new ActionListener() {
             @Override

@@ -36,11 +36,11 @@ public class Paybills {
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
     ResultSet rs;
-    GradientPanel gradientPanel;
+    BackgroundColor backgroundColor;
 
     Paybills(JFrame frame) {
         this.frame = frame;
-        gradientPanel=new GradientPanel(frame);
+        backgroundColor =new BackgroundColor(frame);
 
     }
 
@@ -48,9 +48,8 @@ public class Paybills {
 
         this.panel = mainPanel;
 
-        panelPayBills = gradientPanel.setGradientPanel();
+        panelPayBills = backgroundColor.setGradientPanel();
         panelPayBills.setLayout(null);
-        panelPayBills.setBackground(new Color(0xD9B9F2));
 
         expenseComboBox = new JComboBox(purposes);
         expenseComboBox.setBounds(550, 210, 200, 30);
@@ -144,8 +143,7 @@ public class Paybills {
 
         expAddButton = new JButton("Add");
         expAddButton.setFont(f2);
-        expAddButton.setForeground(new Color(0xFEFEFE));
-        expAddButton.setBackground(new Color(0x7E0AB5));
+        backgroundColor.setButtonColor(expAddButton);
         expAddButton.setBounds(450, 500, 100, 30);
         panelPayBills.add(expAddButton);
         expAddButton.addActionListener(new ActionListener() {
@@ -188,9 +186,7 @@ public class Paybills {
 
         expSaveButton = new JButton("Save");
         expSaveButton.setFont(f2);
-        expSaveButton.setForeground(new Color(0xFEFEFE));
-
-        expSaveButton.setBackground(new Color(0x7E0AB5));
+        backgroundColor.setButtonColor(expSaveButton);
         expSaveButton.setBounds(600, 500, 100, 30);
         panelPayBills.add(expSaveButton);
         expSaveButton.addActionListener(new ActionListener() {
@@ -203,8 +199,7 @@ public class Paybills {
 
         expDelButton = new JButton("Delete");
         expDelButton.setBounds(750, 500, 100, 30);
-        expDelButton.setBackground(new Color(0x7E0AB5));
-        expDelButton.setForeground(new Color(0xFEFEFE));
+        backgroundColor.setButtonColor(expDelButton);
         expDelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

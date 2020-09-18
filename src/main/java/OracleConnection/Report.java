@@ -41,10 +41,11 @@ public class Report {
     private JTextField totalTextField;
     private Font f3;
     private JLabel head;
-
+    BackgroundColor backgroundColor;
 
     public Report(JFrame frame) {
         this.frame = frame;
+        backgroundColor = new BackgroundColor(frame);
         //    salesYearComboFillUp();
 
     }
@@ -58,14 +59,14 @@ public class Report {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(0xA66BD4));
+        panel.setBackground(new Color(0x77A033));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.PLAIN, 18);
         f3 = new Font("Arial", Font.BOLD, 18);
 
 
-         head = new JLabel();
+        head = new JLabel();
         showReportLabel(head, "REPORT");
 
         head.setHorizontalAlignment(SwingConstants.CENTER);
@@ -83,7 +84,7 @@ public class Report {
         salesTable.setSelectionBackground(Color.GRAY);
         salesTable.setRowHeight(30);
         salesTable.setAutoCreateRowSorter(true);
-        salesScrollPane.setBounds(230, 180, 1000, 450);
+        salesScrollPane.setBounds(260, 180, 1000, 450);
 
         buyTable = new JTable();
         buyModel = new DefaultTableModel();
@@ -95,7 +96,7 @@ public class Report {
         buyTable.setSelectionBackground(Color.GRAY);
         buyTable.setRowHeight(30);
         buyTable.setAutoCreateRowSorter(true);
-        buyScrollPane.setBounds(230, 180, 1000, 450);
+        buyScrollPane.setBounds(260, 180, 1000, 450);
 
         expensesTable = new JTable();
         expensesModel = new DefaultTableModel();
@@ -107,7 +108,7 @@ public class Report {
         expensesTable.setSelectionBackground(Color.GRAY);
         expensesTable.setRowHeight(30);
         expensesTable.setAutoCreateRowSorter(true);
-        expensesScrollPane.setBounds(230, 180, 1000, 450);
+        expensesScrollPane.setBounds(260, 180, 1000, 450);
 
         totalLabel = new JLabel("TOTAL : ");
         totalLabel.setBounds(850, 670, 150, 50);
@@ -122,11 +123,11 @@ public class Report {
         labelTotalExpense.setBounds(450, 255, 150, 50);
         labelTotalExpense.setFont(f3);
 
-        labelTotalSales = new JLabel(  "Net Sales   : ");
+        labelTotalSales = new JLabel("Net Sales   : ");
         labelTotalSales.setBounds(450, 325, 150, 50);
         labelTotalSales.setFont(f3);
 
-        labelNetIncome = new JLabel(   "Net Income  : ");
+        labelNetIncome = new JLabel("Net Income  : ");
         labelNetIncome.setBounds(450, 385, 150, 50);
         labelNetIncome.setFont(f3);
 
@@ -144,10 +145,9 @@ public class Report {
         netIncomeTF.setFont(f2);
 
 
-        rsales = new JButton("Sales");
-        rsales.setBounds(50, 330, 120, 30);
-        rsales.setForeground(Color.WHITE);
-        rsales.setBackground(new Color(0x7E0AB5));
+        rsales = new JButton("SALES");
+        rsales.setBounds(50, 360, 180, 30);
+        backgroundColor.setButtonColor(rsales);
         rsales.setFont(f2);
         rsales.addActionListener(new ActionListener() {
             @Override
@@ -171,10 +171,9 @@ public class Report {
         panel.add(rsales);
 
 
-        rbuy = new JButton("Buy");
-        rbuy.setBounds(50, 280, 120, 30);
-        rbuy.setForeground(Color.WHITE);
-        rbuy.setBackground(new Color(0x7E0AB5));
+        rbuy = new JButton("PURCHASE");
+        rbuy.setBounds(50, 310, 180, 30);
+        backgroundColor.setButtonColor(rbuy);
         rbuy.setFont(f2);
         rbuy.addActionListener(new ActionListener() {
             @Override
@@ -199,10 +198,9 @@ public class Report {
         panel.add(rbuy);
 
 
-        rexpenses = new JButton("Expenses");
-        rexpenses.setBounds(50, 380, 120, 30);
-        rexpenses.setForeground(Color.WHITE);
-        rexpenses.setBackground(new Color(0x7E0AB5));
+        rexpenses = new JButton("UTILITIES");
+        rexpenses.setBounds(50, 410, 180, 30);
+        backgroundColor.setButtonColor(rexpenses);
         rexpenses.setFont(f2);
         rexpenses.addActionListener(new ActionListener() {
             @Override
@@ -226,10 +224,9 @@ public class Report {
         });
         panel.add(rexpenses);
 
-        summary = new JButton("Summary");
-        summary.setBounds(50, 230, 120, 30);
-        summary.setForeground(Color.WHITE);
-        summary.setBackground(new Color(0x7E0AB5));
+        summary = new JButton("SUMMARY");
+        summary.setBounds(50, 260, 180, 30);
+        backgroundColor.setButtonColor(summary);
         summary.setFont(f2);
 
         summary.addActionListener(new ActionListener() {
@@ -239,7 +236,7 @@ public class Report {
                 panel.remove(buyScrollPane);
                 panel.remove(salesScrollPane);
                 setSummaryInfoVisibility(true);
-showReportLabel(head, "SUMMARY");
+                showReportLabel(head, "SUMMARY");
                 setVisibilityTotal(false);
                 panel.updateUI();
                 summaryYearComboFillUp();
@@ -545,12 +542,10 @@ showReportLabel(head, "SUMMARY");
 
     private int getMonthNumber() throws ParseException {
         String monthName = monthComboBox.getSelectedItem().toString();
-        //System.out.println(monthName);
 
         Date date = new SimpleDateFormat("MMMM").parse(monthName);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        //System.out.println(monthNumber);
         return cal.get(Calendar.MONTH) + 1;
     }
 
@@ -607,9 +602,5 @@ showReportLabel(head, "SUMMARY");
         }
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        Report report = new Report(frame);
-        report.initComponents();
-    }
+
 }

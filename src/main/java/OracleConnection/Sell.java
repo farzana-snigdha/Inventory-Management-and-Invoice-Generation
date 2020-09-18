@@ -56,11 +56,12 @@ public class Sell {
             return name;
         }
     }
-GradientPanel gradientPanel;
+
+    BackgroundColor backgroundColor;
 
     Sell(JFrame frame, Inventory i) {
         this.frame = frame;
-        gradientPanel=new GradientPanel(frame);
+        backgroundColor = new BackgroundColor(frame);
         inv = i;
     }
 
@@ -68,9 +69,8 @@ GradientPanel gradientPanel;
 
         this.Panel = mainPanel;
 
-        panelSell = gradientPanel.setGradientPanel();
+        panelSell = backgroundColor.setGradientPanel();
         panelSell.setLayout(null);
-        panelSell.setBackground(new Color(0xD9B9F2));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -140,7 +140,7 @@ GradientPanel gradientPanel;
 
 
                     } catch (Exception ex) {
-                        System.out.println(ex+" sellComboBox");
+                        System.out.println(ex + " sellComboBox");
                     }
                 }
             });
@@ -157,11 +157,6 @@ GradientPanel gradientPanel;
             sellQuantityTextField.setFont(f1);
             panelSell.add(sellQuantityTextField);
 
-          /*  sellDateTextField = new JTextField();
-            sellDateTextField.setBounds(600, 360, 200, 30);
-            sellDateTextField.setFont(f1);
-            panelSell.add(sellDateTextField);*/
-
             dateChooser = new JDateChooser();
             dateChooser.setBounds(600, 360, 200, 30); // Modify depending on your preference
             panelSell.add(dateChooser);
@@ -169,8 +164,7 @@ GradientPanel gradientPanel;
             sellUpdateButton = new JButton("Update");
             sellUpdateButton.setFont(f2);
             sellUpdateButton.setBounds(400, 450, 100, 30);
-            sellUpdateButton.setBackground(new Color(0x7E0AB5));
-            sellUpdateButton.setForeground(new Color(0xFEFEFE));
+            backgroundColor.setButtonColor(sellUpdateButton);
             panelSell.add(sellUpdateButton);
             sellUpdateButton.addActionListener(new ActionListener() {
                 @Override
@@ -182,8 +176,7 @@ GradientPanel gradientPanel;
             sellAddButton = new JButton("Add");
             sellAddButton.setFont(f2);
             sellAddButton.setBounds(600, 450, 100, 30);
-            sellAddButton.setBackground(new Color(0x7E0AB5));
-            sellAddButton.setForeground(new Color(0xFEFEFE));
+            backgroundColor.setButtonColor(sellAddButton);
             sellAddButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -207,9 +200,7 @@ GradientPanel gradientPanel;
 
             invoiceButton = new JButton("Invoice");
             invoiceButton.setBounds(800, 450, 100, 30);
-            invoiceButton.setBackground(new Color(0x7E0AB5));
-            invoiceButton.setForeground(new Color(0xFEFEFE));
-
+            backgroundColor.setButtonColor(invoiceButton);
             invoiceButton.setFont(f2);
             panelSell.add(invoiceButton);
 
@@ -313,7 +304,7 @@ GradientPanel gradientPanel;
             sellTable.setSelectionBackground(Color.GRAY);
             sellTable.setRowHeight(30);
 
-            sellScrollPane.setBounds(150, 500, (int) (xsize/1.5), 300);
+            sellScrollPane.setBounds(150, 500, (int) (xsize / 1.5), 300);
             panelSell.add(sellScrollPane);
         }
 
@@ -334,7 +325,7 @@ GradientPanel gradientPanel;
 
 
         } catch (Exception c) {
-            System.out.println(c+" prodName");
+            System.out.println(c + " prodName");
         }
     }
 
@@ -350,18 +341,14 @@ GradientPanel gradientPanel;
 
     private void sellTableQtyUpdate(java.awt.event.ActionEvent evt) {
         try {
-            /*String sellDate = sellDateTextField.getText();
-            Date date = Date.valueOf(sellDate);*/
 
             Date date = convertJavaDateToSqlDate(dateChooser.getDate());
-
 
             OracleConnection oc1 = new OracleConnection();
             String sql = "select  distinct S_NAME,max(mrp) ,sum(S_QUANTITY) from SUPPLY_ORDER  where s_name=? group by S_name";
             PreparedStatement p1 = oc1.conn.prepareStatement(sql);
             p1.setString(1, sellComboBox.getSelectedItem().toString());
             ResultSet rs1 = p1.executeQuery();
-
 
             while (rs1.next()) {
                 int availableQty = rs1.getInt(3);
@@ -373,7 +360,6 @@ GradientPanel gradientPanel;
                 if (chosenQty > availableQty) {
                     JOptionPane.showMessageDialog(frame, "Available product = " + availableQty + " \n Please input another quantity");
                 } else {
-
 
                     int i = sellTable.getSelectedRow();
                     DefaultTableModel d = (DefaultTableModel) sellTable.getModel();
@@ -403,7 +389,6 @@ GradientPanel gradientPanel;
 
             Date date = convertJavaDateToSqlDate(dateChooser.getDate());
 
-
             OracleConnection oc1 = new OracleConnection();
             String sql = "select  distinct S_NAME,max(mrp) ,sum(S_QUANTITY) from SUPPLY_ORDER  where s_name=? group by S_name";
             PreparedStatement p1 = oc1.conn.prepareStatement(sql);
@@ -412,7 +397,6 @@ GradientPanel gradientPanel;
 
             while (rs1.next()) {
                 int availableQty = rs1.getInt(3);
-              //  System.out.println(availableQty +" qty");
                 int mrp = Integer.parseInt(sellMRPTextField.getText());
                 int chosenQty = Integer.parseInt(sellQuantityTextField.getText());
 
@@ -432,6 +416,7 @@ GradientPanel gradientPanel;
             System.out.println(e + " addToJtable sell");
         }
     }
+
     private java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
         return new java.sql.Date(date.getTime());
     }

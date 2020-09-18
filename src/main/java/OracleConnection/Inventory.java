@@ -18,7 +18,7 @@ public class Inventory {
     private Font f1, f2;
     private JButton inventoryDeleteButton;
 
-GradientPanel gradientPanel;
+BackgroundColor backgroundColor;
     private JTable inventoryTable;
     private DefaultTableModel inventoryModel;
     private JScrollPane inventoryScrollPane;
@@ -34,7 +34,7 @@ GradientPanel gradientPanel;
 
     public Inventory(JFrame frame) {
         this.frame = frame;
-        gradientPanel=new GradientPanel(frame);
+        backgroundColor =new BackgroundColor(frame);
 
         initComponents(Panel);
         updateInventoryTable();
@@ -44,9 +44,8 @@ GradientPanel gradientPanel;
 
         this.Panel = mainPanel;
 
-        panelInventory = gradientPanel.setGradientPanel();
+        panelInventory = backgroundColor.setGradientPanel();
         panelInventory.setLayout(null);
-        panelInventory.setBackground(new Color(0xD9B9F2));
 
 
         f1 = new Font("Arial", Font.BOLD, 15);
@@ -54,8 +53,7 @@ GradientPanel gradientPanel;
 
         inventoryDeleteButton = new JButton("Delete");
         inventoryDeleteButton.setBounds(600, 240, 90, 25);
-        inventoryDeleteButton.setBackground(new Color(0x7E0AB5));
-        inventoryDeleteButton.setForeground(new Color(0xFEFEFE));
+        backgroundColor.setButtonColor(inventoryDeleteButton);
         inventoryDeleteButton.setFont(f2);
         panelInventory.add(inventoryDeleteButton);
         inventoryDeleteButton.addActionListener(new ActionListener() {

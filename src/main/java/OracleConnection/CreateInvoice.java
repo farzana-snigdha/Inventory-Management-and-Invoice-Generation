@@ -45,11 +45,11 @@ public class CreateInvoice {
     LoginPage loginPage;
     private JLabel netTotalLabel;
     private JTextField netTotalTextField;
-GradientPanel gradientPanel;
+BackgroundColor backgroundColor;
 
     public CreateInvoice(JFrame frame) {
         this.frame = frame;
-        gradientPanel=new GradientPanel(frame);
+        backgroundColor =new BackgroundColor(frame);
         initComponents();
 
     }
@@ -58,10 +58,8 @@ GradientPanel gradientPanel;
         //frame = new JFrame();
 
 
-        mainpanel = gradientPanel.setGradientPanel();
+        mainpanel = backgroundColor.setGradientPanel();
         mainpanel.setLayout(null);
-        mainpanel.setBackground(new Color(0xD9B9F2));
-        //mainpanel.setBackground(Color.lightGray);
         JLabel head = new JLabel("Invoice");
         head.setHorizontalAlignment(SwingConstants.CENTER);
         head.setFont(new Font("Lato Medium", Font.PLAIN, 40));
@@ -125,7 +123,7 @@ GradientPanel gradientPanel;
 
         invsave = new JButton("Save");
         invsave.setBounds(200, 750, 120, 40);
-        invsave.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(invsave);
         invsave.setFont(f2);
         mainpanel.add(invsave);
         invsave.addActionListener(new ActionListener() {
@@ -268,7 +266,7 @@ GradientPanel gradientPanel;
         });
         invprint = new JButton("Print");
         invprint.setBounds(350, 750, 120, 40);
-        invprint.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(invprint);
         invprint.setFont(f2);
         mainpanel.add(invprint);
         invprint.addActionListener(new ActionListener() {
@@ -314,7 +312,7 @@ GradientPanel gradientPanel;
 
         invback = new JButton("Back");
         invback.setBounds(500, 750, 120, 40);
-        invback.setBackground(Color.cyan);
+        backgroundColor.setButtonColor(invback);
         invback.setFont(f2);
         mainpanel.add(invback);
         invback.addActionListener(new ActionListener() {

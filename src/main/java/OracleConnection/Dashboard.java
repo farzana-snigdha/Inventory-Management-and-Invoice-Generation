@@ -8,10 +8,9 @@ import java.awt.*;
 public class Dashboard {
 
     private JFrame frame;
-    private JPanel mainPanel, scrollPanel,logOutPanel;
+    private JPanel mainPanel, logOutPanel;
     private Font f1, f2;
     public JTabbedPane tabbedPane;
-    private JScrollPane scrollPane;
 
     Dashboard(JFrame frame) {
         this.frame = frame;
@@ -23,9 +22,9 @@ public class Dashboard {
 
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        mainPanel.setBackground(new Color(0x7E0AB5));
+        mainPanel.setBackground(new Color(0x556B2F));
 
-        f1 = new Font("Arial", Font.BOLD, 20);
+        f1 = new Font("Arial", Font.PLAIN, 20);
         f2 = new Font("Arial", Font.BOLD, 11);
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -36,16 +35,18 @@ public class Dashboard {
 
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.setBounds(0, 0, xsize, ysize);
+        tabbedPane.setBounds(10, 0, xsize, ysize);
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
+        tabbedPane.setFont(f1);
+        tabbedPane.setBackground(new Color(0x77A033));
         mainPanel.add(tabbedPane);
 
         final Inventory inventory = new Inventory(frame);
         final Sell sell = new Sell(frame, inventory);
         final Buy buy = new Buy(frame, inventory,sell);
-        logOutPanel= new JPanel();
+    /*    logOutPanel= new JPanel();
         logOutPanel.setLayout(null);
-        logOutPanel.setBackground(new Color(0xA66BD4));
+        logOutPanel.setBackground(new Color(0xA66BD4));*/
 
         tabbedPane.addTab("Inventory", inventory.initComponents(mainPanel));
         tabbedPane.addTab("Buy", buy.initComponents(mainPanel));

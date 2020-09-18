@@ -26,13 +26,14 @@ public class Buy {
     ResultSet rs;
     Inventory inv;
     Sell sell;
-GradientPanel gradientPanel;
+    BackgroundColor backgroundColor;
+
     public Buy(JFrame frame, Inventory i, Sell s) {
         this.frame = frame;
         inv = i;
         sell = s;
         inv.updateInventoryTable();
-gradientPanel=new GradientPanel(frame);
+        backgroundColor = new BackgroundColor(frame);
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
@@ -40,9 +41,8 @@ gradientPanel=new GradientPanel(frame);
 
         this.Panel = mainPanel;
 
-        panelBuy = gradientPanel.setGradientPanel();
+        panelBuy = backgroundColor.setGradientPanel();
         panelBuy.setLayout(null);
-        panelBuy.setBackground(new Color(0xD9B9F2));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -152,10 +152,8 @@ gradientPanel=new GradientPanel(frame);
             buyAddNewButton = new JButton("Add New");
             buyAddNewButton.setBounds(850, 110, 100, 30);
             buyAddNewButton.setFont(f2);
-            buyAddNewButton.setForeground(new Color(0xFEFEFE));
-
-            buyAddNewButton.setBackground(new Color(0x7E0AB5));
-            buyAddNewButton.addActionListener(new ActionListener() {
+     backgroundColor.setButtonColor(buyAddNewButton);
+     buyAddNewButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     new ProductEntry(frame);
@@ -168,8 +166,7 @@ gradientPanel=new GradientPanel(frame);
             buySaveButton = new JButton("Save");
             buySaveButton.setFont(f2);
             buySaveButton.setBounds(580, 550, 80, 30);
-            buySaveButton.setBackground(new Color(0x7E0AB5));
-            buySaveButton.setForeground(new Color(0xFEFEFE));
+            backgroundColor.setButtonColor(buySaveButton);
 
             panelBuy.add(buySaveButton);
             buySaveButton.addActionListener(new ActionListener() {
