@@ -30,7 +30,6 @@ public class LoginPage {
 
         panel = backgroundColor.setGradientPanel();
         panel.setLayout(null);
-        panel.setBackground(Color.lightGray);
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -63,7 +62,6 @@ public class LoginPage {
         loginButton.setBounds(630, 360, 80, 30);
         backgroundColor.setButtonColor(loginButton);
         loginButton.setFont(f2);
-        loginButton.setForeground(new Color(0xFEFEFE));
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -77,10 +75,8 @@ public class LoginPage {
                     if (rs.next()) {
                         uID = String.valueOf(rs.getInt("U_ID"));
                         String designation = rs.getString("designation");
-                        // System.out.println(uID);
 
-                        if (designation.equals("admin") || designation.equals("ADMIN") || designation.equals("Admin")) {
-
+                        if (designation.equals("Admin")) {
                             new AdminDashboard(frame);
                         } else {
                             new Dashboard(frame);
@@ -88,14 +84,13 @@ public class LoginPage {
                         panel.setVisible(false);
 
                     } else {
-
                         JOptionPane.showMessageDialog(frame, "invalid user id or password");
                         userNameField.setText("");
                         passwordField.setText("");
                         userNameField.requestFocus();
                     }
                 } catch (Exception e1) {
-                    System.out.println(e1);
+                    System.out.println(e1 +" login failed");
                 }
 
             }
@@ -104,19 +99,10 @@ public class LoginPage {
 
 
         frame.add(panel);
-        frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+        backgroundColor.setScreenSize(frame);
     }
-
 
 
 
@@ -138,16 +124,14 @@ public class LoginPage {
                 count = rs.getInt(1);
                 System.out.println(count);
                 if (count == 0) {
-
                     Register register = new Register(frame);
                     register.initComponents();
 
                 } else new LoginPage(frame);
             }
 
-
         } catch (Exception e) {
-            System.out.println(e + "  login drama");
+            System.out.println(e + "  login problem");
         }
     }
 }

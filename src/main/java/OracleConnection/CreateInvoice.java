@@ -70,23 +70,19 @@ BackgroundColor backgroundColor;
         f2 = new Font("Arial", Font.BOLD, 11);
         cName = new JLabel("Customer Name : ");
         cName.setBounds(200, 100, 150, 50);
-        cName.setFont(f1);
-        mainpanel.add(cName);
+        labelPanelAdd(cName);
 
         mobile = new JLabel("Mobile no : ");
         mobile.setBounds(650, 100, 150, 50);
-        mobile.setFont(f1);
-        mainpanel.add(mobile);
+        labelPanelAdd(mobile);
 
         address = new JLabel("Address : ");
         address.setBounds(200, 150, 150, 50);
-        address.setFont(f1);
-        mainpanel.add(address);
+        labelPanelAdd(address);
 
         email = new JLabel("Email : ");
         email.setBounds(650, 150, 150, 50);
-        email.setFont(f1);
-        mainpanel.add(email);
+        labelPanelAdd(email);
 
         tfName = new JTextField();
         tfName.setBounds(350, 110, 200, 30);
@@ -325,8 +321,7 @@ BackgroundColor backgroundColor;
 
         invoiceSerial = new JLabel("Invoice serial : ");
         invoiceSerial.setBounds(10, 10, 130, 40);
-        invoiceSerial.setFont(f1);
-        mainpanel.add(invoiceSerial);
+        labelPanelAdd(invoiceSerial);
 
         invoiceSerialNumberTextField = new JTextField();
         invoiceSerialNumberTextField.setBounds(130, 15, 160, 30);
@@ -337,13 +332,11 @@ BackgroundColor backgroundColor;
 
         invoiceGeneratorCreatedBy = new JLabel("Created by :");
         invoiceGeneratorCreatedBy.setBounds(950, 740, 150, 50);
-        invoiceGeneratorCreatedBy.setFont(f1);
-        mainpanel.add(invoiceGeneratorCreatedBy);
+        labelPanelAdd(invoiceGeneratorCreatedBy);
 
         companyName = new JLabel("Company Name :");
         companyName.setBounds(950, 790, 150, 50);
-        companyName.setFont(f1);
-        mainpanel.add(companyName);
+        labelPanelAdd(companyName);
 
         invoiceGeneratorCreatedByTextField = new JTextField();
         invoiceGeneratorCreatedByTextField.setBounds(1150, 750, 200, 30);
@@ -361,8 +354,7 @@ BackgroundColor backgroundColor;
         netTotalLabel = new JLabel("Net Total : ");
         netTotalLabel.setBounds(800, 660, 150, 50);
         netTotalLabel.setToolTipText("Enter password");
-        netTotalLabel.setFont(f1);
-        mainpanel.add(netTotalLabel);
+      labelPanelAdd(netTotalLabel);
 
         netTotalTextField = new JTextField();
         netTotalTextField.setBounds(950, 670, 200, 30);
@@ -372,18 +364,15 @@ BackgroundColor backgroundColor;
         mainpanel.add(netTotalTextField);
 
         frame.add(mainpanel);
-        frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Inventory Management");
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+      backgroundColor.setScreenSize(frame);
 
+    }
+
+    private void labelPanelAdd(JLabel label) {
+        label.setFont(f1);
+        mainpanel.add(label);
     }
 
     private void setInvoiceSerialNumber() {
@@ -436,7 +425,9 @@ BackgroundColor backgroundColor;
 
     private void setNetTotalValue() {
         try{
-            String sql="select sum(mrp*p_quantity) from supply_order,sales_details,sales,product where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
+            String sql="select sum(mrp*p_quantity) from supply_order,sales_details,sales,product " +
+                            "where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id " +
+                                "and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
             OracleConnection oc=new OracleConnection();
             PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
             ResultSet rs=preparedStatement.executeQuery();

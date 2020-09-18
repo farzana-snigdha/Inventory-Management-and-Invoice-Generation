@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.Vector;
 
 public class Inventory {
@@ -24,7 +23,6 @@ BackgroundColor backgroundColor;
     private JScrollPane inventoryScrollPane;
 
     private String[] inventoryColumns = {"Id", "Name", "MRP", "Quantity"};
-    private String[] inventoryRows = new String[4];
 
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
@@ -37,7 +35,7 @@ BackgroundColor backgroundColor;
         backgroundColor =new BackgroundColor(frame);
 
         initComponents(Panel);
-        updateInventoryTable();
+ //       updateInventoryTable();
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
@@ -86,6 +84,7 @@ BackgroundColor backgroundColor;
 
 
                     } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(frame,"Selected Product Is Sold At Least Once \n It Cannot Be Deleted ");
                         System.out.println(ex + " inventory delete");
                     }
                 }
@@ -144,16 +143,9 @@ BackgroundColor backgroundColor;
 
         } catch (Exception e) {
             System.out.println(e + " table_update_inventory");
-        } finally {
-            try {
-                rs.close();
-                ps.close();
-
-            } catch (SQLException e) {
-                System.out.println(e + " 1table_update_inventory");
-            }
         }
     }
+
 
 
 }

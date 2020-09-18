@@ -35,7 +35,7 @@ public class Dashboard {
 
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.setBounds(10, 0, xsize, ysize);
+        tabbedPane.setBounds(0, 0, xsize, ysize);
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         tabbedPane.setFont(f1);
         tabbedPane.setBackground(new Color(0x77A033));

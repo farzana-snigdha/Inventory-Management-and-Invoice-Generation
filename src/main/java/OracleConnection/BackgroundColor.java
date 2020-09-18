@@ -33,4 +33,21 @@ public class BackgroundColor {
         button.setBackground(new Color(61, 78, 33, 255));
         button.setForeground(Color.white);
     }
+
+    public void setScreenSize(JFrame frame) {
+        frame.setAlwaysOnTop(true);
+        frame.setResizable(false);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("INVENTORY MANAGEMENT");
+
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        int xsize = (int) toolkit.getScreenSize().getWidth();
+        int ysize = (int) toolkit.getScreenSize().getHeight();
+        frame.setSize(xsize, ysize);
+        System.out.println(xsize);
+    }
+
+
 }

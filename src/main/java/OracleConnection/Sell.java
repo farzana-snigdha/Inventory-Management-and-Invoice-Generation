@@ -16,7 +16,7 @@ import java.sql.*;
 public class Sell {
     private JFrame frame;
     private Font f1, f2;
-    private JComboBox sellComboBox;//sell
+    private JComboBox sellComboBox;
     private JLabel sellNameLabel;
     private JLabel sellIdLabel;
     private JTextField sellIdTextField;
@@ -24,8 +24,8 @@ public class Sell {
     private JTextField sellMRPTextField;
     private JLabel sellQuantityLabel;
     private JLabel sellDateLabel;
-    private JTextField sellQuantityTextField;//sell
-    private JButton invoiceButton, sellSaveButton, sellAddButton, sellUpdateButton;//sell
+    private JTextField sellQuantityTextField;
+    private JButton invoiceButton, sellAddButton, sellUpdateButton;
     private JTable sellTable;
     private JPanel panelSell, Panel;
     private DefaultTableModel sellModel;
@@ -34,7 +34,6 @@ public class Sell {
 
 
     private String[] sellColumns = {"Name", "Id", "MRP", "Quantity", "Total", "Date"};
-    private String[] sellRows = new String[6];
 
     OracleConnection oc = new OracleConnection();
     PreparedStatement ps;
@@ -75,11 +74,7 @@ public class Sell {
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.BOLD, 11);
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+       backgroundColor.setScreenSize(frame);
 
 
         {
@@ -91,35 +86,23 @@ public class Sell {
             sellComboBox.setEditable(false);
 
             sellNameLabel = new JLabel("Product Name : ");
-            sellNameLabel.setBounds(450, 150, 150, 50);
-            sellNameLabel.setFont(f1);
-            panelSell.add(sellNameLabel);
+            labelPanelAdd(sellNameLabel, 150);
 
             sellIdLabel = new JLabel("Product Id : ");
-            sellIdLabel.setBounds(450, 200, 150, 50);
-            sellIdLabel.setFont(f1);
-            panelSell.add(sellIdLabel);
+            labelPanelAdd(sellIdLabel, 200);
 
 
             sellMRPLabel = new JLabel("MRP : ");
-            sellMRPLabel.setBounds(450, 250, 150, 50);
-            sellMRPLabel.setFont(f1);
-            panelSell.add(sellMRPLabel);
+            labelPanelAdd(sellMRPLabel, 250);
 
             sellQuantityLabel = new JLabel("Quantity : ");
-            sellQuantityLabel.setBounds(450, 300, 150, 50);
-            sellQuantityLabel.setFont(f1);
-            panelSell.add(sellQuantityLabel);
+            labelPanelAdd(sellQuantityLabel, 300);
 
             sellDateLabel = new JLabel("Date : ");
-            sellDateLabel.setBounds(450, 350, 150, 50);
-            sellDateLabel.setFont(f1);
-            panelSell.add(sellDateLabel);
+            labelPanelAdd(sellDateLabel, 350);
 
             sellIdTextField = new JTextField();
-            sellIdTextField.setBounds(600, 210, 200, 30);
-            sellIdTextField.setFont(f1);
-            panelSell.add(sellIdTextField);
+            textFieldPanelAdd(sellIdTextField, 210);
             sellIdTextField.setEditable(false);
 
             sellComboBox.addItemListener(new ItemListener() {
@@ -147,25 +130,18 @@ public class Sell {
 
 
             sellMRPTextField = new JTextField();
-            sellMRPTextField.setBounds(600, 260, 200, 30);
-            sellMRPTextField.setFont(f1);
-            panelSell.add(sellMRPTextField);
+            textFieldPanelAdd(sellMRPTextField, 260);
             sellMRPTextField.setEditable(false);
 
             sellQuantityTextField = new JTextField();
-            sellQuantityTextField.setBounds(600, 310, 200, 30);
-            sellQuantityTextField.setFont(f1);
-            panelSell.add(sellQuantityTextField);
+            textFieldPanelAdd(sellQuantityTextField, 310);
 
             dateChooser = new JDateChooser();
-            dateChooser.setBounds(600, 360, 200, 30); // Modify depending on your preference
+            dateChooser.setBounds(600, 360, 200, 30);
             panelSell.add(dateChooser);
 
             sellUpdateButton = new JButton("Update");
-            sellUpdateButton.setFont(f2);
-            sellUpdateButton.setBounds(400, 450, 100, 30);
-            backgroundColor.setButtonColor(sellUpdateButton);
-            panelSell.add(sellUpdateButton);
+            buttonPanelAdd(sellUpdateButton, 400);
             sellUpdateButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -174,14 +150,13 @@ public class Sell {
             });
 
             sellAddButton = new JButton("Add");
-            sellAddButton.setFont(f2);
-            sellAddButton.setBounds(600, 450, 100, 30);
-            backgroundColor.setButtonColor(sellAddButton);
+            buttonPanelAdd(sellAddButton, 600);
+
             sellAddButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        addToJtable();
+                        addItemsInSellTable();
                         panelSell.add(sellAddButton);
                         sellTable.addMouseListener(new java.awt.event.MouseAdapter() {
                             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -195,14 +170,10 @@ public class Sell {
                     }
                 }
             });
-            panelSell.add(sellAddButton);
 
 
             invoiceButton = new JButton("Invoice");
-            invoiceButton.setBounds(800, 450, 100, 30);
-            backgroundColor.setButtonColor(invoiceButton);
-            invoiceButton.setFont(f2);
-            panelSell.add(invoiceButton);
+            buttonPanelAdd(invoiceButton, 800);
 
             invoiceButton.addActionListener(new ActionListener() {
                 @Override
@@ -237,7 +208,7 @@ public class Sell {
                             OracleConnection oc = new OracleConnection();
                             String sql1 = "insert into SALES_DETAILS (P_QUANTITY,P_ID,SALE_ID) values(?,?,?)";
                             PreparedStatement ps1 = oc.conn.prepareStatement(sql1);
-                            String qty = "", id = "";
+                            String qty , id ;
                             for (int i = 0; i < sellTable.getRowCount(); i++) {
                                 qty = sellTable.getValueAt(i, 3).toString();
                                 id = sellTable.getValueAt(i, 1).toString();
@@ -246,7 +217,6 @@ public class Sell {
                                 ps1.setInt(1, Integer.parseInt(qty));
                                 ps1.setString(2, (id));
                                 ps1.setInt(3, lastInsertId);
-                                // System.out.println("k  "+lastInsertId);
 
                                 ps1.executeUpdate();
                             }
@@ -277,19 +247,7 @@ public class Sell {
                     } catch (Exception ex) {
                         System.out.println(ex + " sell save");
                     }
-                    TableModel tm = sellTable.getModel();
-                    int rowNum = sellTable.getRowCount();
-                    Object[] ob = new Object[5];
-                    CreateInvoice createInvoice = new CreateInvoice(frame);
-                    DefaultTableModel d = (DefaultTableModel) createInvoice.table.getModel();
-                    for (int i = 0; i < rowNum; i++) {
-                        ob[0] = i + 1;
-                        ob[1] = tm.getValueAt(i, 0);
-                        ob[2] = tm.getValueAt(i, 2);
-                        ob[3] = tm.getValueAt(i, 3);
-                        ob[4] = tm.getValueAt(i, 4);
-                        d.addRow(ob);
-                    }
+                    addItemsInCreateInvoiceTable();
                     mainPanel.setVisible(false);
                 }
             });
@@ -303,19 +261,52 @@ public class Sell {
             sellTable.setBackground(Color.WHITE);
             sellTable.setSelectionBackground(Color.GRAY);
             sellTable.setRowHeight(30);
-
-            sellScrollPane.setBounds(150, 500, (int) (xsize / 1.5), 300);
+            sellScrollPane.setBounds(150, 500, 1200, 300);
             panelSell.add(sellScrollPane);
         }
-
 
         prodName();
         return panelSell;
     }
 
+    private void buttonPanelAdd(JButton button, int xCoordinate) {
+        button.setFont(f2);
+        button.setBounds(xCoordinate, 450, 100, 30);
+        backgroundColor.setButtonColor(button);
+        panelSell.add(button);
+    }
+
+    private void textFieldPanelAdd(JTextField textField, int yCoordinate) {
+        textField.setBounds(600, yCoordinate, 200, 30);
+        textField.setFont(f1);
+        panelSell.add(textField);
+    }
+
+    private void labelPanelAdd(JLabel label, int yCoordinate) {
+        label.setBounds(450, yCoordinate, 150, 50);
+        label.setFont(f1);
+        panelSell.add(label);
+    }
+
+    private void addItemsInCreateInvoiceTable() {
+        TableModel tm = sellTable.getModel();
+        int rowNum = sellTable.getRowCount();
+        Object[] ob = new Object[5];
+        CreateInvoice createInvoice = new CreateInvoice(frame);
+        DefaultTableModel d = (DefaultTableModel) createInvoice.table.getModel();
+        for (int i = 0; i < rowNum; i++) {
+            ob[0] = i + 1;
+            ob[1] = tm.getValueAt(i, 0);
+            ob[2] = tm.getValueAt(i, 2);
+            ob[3] = tm.getValueAt(i, 3);
+            ob[4] = tm.getValueAt(i, 4);
+            d.addRow(ob);
+        }
+    }
+
     public void prodName() {
         try {
-            String sql = "select distinct s_name,max(mrp)  from SUPPLY_ORDER having sum(s_quantity)>0 group by s_name order by s_name ";
+            String sql = "select distinct s_name,max(mrp) from SUPPLY_ORDER having sum(s_quantity)>0 group by s_name order by s_name ";
             ps = oc.conn.prepareStatement(sql);
             rs = ps.executeQuery();
             sellComboBox.removeAllItems();
@@ -384,7 +375,7 @@ public class Sell {
 
     }
 
-    private void addToJtable() {
+    private void addItemsInSellTable() {
         try {
 
             Date date = convertJavaDateToSqlDate(dateChooser.getDate());

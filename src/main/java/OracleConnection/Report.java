@@ -18,7 +18,7 @@ public class Report {
     private JComboBox monthComboBox, yearComboBox;
     private Font f1, f2;
     private JButton rsales, rbuy, rexpenses, summary;
-    private JTextField tyear, tmonth, totalExpenseTF, totalSalesTF, netIncomeTF;
+    private JTextField totalExpenseTF, totalSalesTF, netIncomeTF;
     private JLabel lyear, lmonth, labelTotalExpense, labelTotalSales, labelNetIncome;
     private JTable buyTable, salesTable, expensesTable;
     private DefaultTableModel buyModel, salesModel, expensesModel;
@@ -28,15 +28,13 @@ public class Report {
     int totalBuy = 0;
 
     private String[] buyColumns = {"Date", "Product ID", "Name", "Supplier", "Buying price", "Quantity", "Unit MRP", "Total"};
-    private String[] buyRows = new String[8];
 
     private String[] salesColumns = {"Date", "Product Name", "Seller", "Quantity", "MRP", "Total"};
-    private String[] salesRows = new String[5];
 
     private String[] expensesColumns = {"Date", "Expense Id", "Purpose", "Amount (taka)", "Description"};
-    private String[] expensesRows = new String[5];
 
     private static String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};//month list.
+
     private JLabel totalLabel;
     private JTextField totalTextField;
     private Font f3;
@@ -46,16 +44,11 @@ public class Report {
     public Report(JFrame frame) {
         this.frame = frame;
         backgroundColor = new BackgroundColor(frame);
-        //    salesYearComboFillUp();
-
     }
 
     public JPanel initComponents() {
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        int xsize = (int) toolkit.getScreenSize().getWidth();
-        int ysize = (int) toolkit.getScreenSize().getHeight();
-        frame.setSize(xsize, ysize);
+      backgroundColor.setScreenSize(frame);
 
         panel = new JPanel();
         panel.setLayout(null);
@@ -67,7 +60,7 @@ public class Report {
 
 
         head = new JLabel();
-        showReportLabel(head, "REPORT");
+        showReportLabel( "REPORT");
 
         head.setHorizontalAlignment(SwingConstants.CENTER);
         head.setFont(new Font("Lato Medium", Font.BOLD, 40));
@@ -79,36 +72,21 @@ public class Report {
         salesScrollPane = new JScrollPane(salesTable);
         salesModel.setColumnIdentifiers(salesColumns);
         salesTable.setModel(salesModel);
-        salesTable.setFont(f1);
-        salesTable.setBackground(Color.WHITE);
-        salesTable.setSelectionBackground(Color.GRAY);
-        salesTable.setRowHeight(30);
-        salesTable.setAutoCreateRowSorter(true);
-        salesScrollPane.setBounds(260, 180, 1000, 450);
+        reportTableDesign(salesTable, salesScrollPane);
 
         buyTable = new JTable();
         buyModel = new DefaultTableModel();
         buyScrollPane = new JScrollPane(buyTable);
         buyModel.setColumnIdentifiers(buyColumns);
         buyTable.setModel(buyModel);
-        buyTable.setFont(f1);
-        buyTable.setBackground(Color.WHITE);
-        buyTable.setSelectionBackground(Color.GRAY);
-        buyTable.setRowHeight(30);
-        buyTable.setAutoCreateRowSorter(true);
-        buyScrollPane.setBounds(260, 180, 1000, 450);
+        reportTableDesign(buyTable, buyScrollPane);
 
         expensesTable = new JTable();
         expensesModel = new DefaultTableModel();
         expensesScrollPane = new JScrollPane(expensesTable);
         expensesModel.setColumnIdentifiers(expensesColumns);
         expensesTable.setModel(expensesModel);
-        expensesTable.setFont(f1);
-        expensesTable.setBackground(Color.WHITE);
-        expensesTable.setSelectionBackground(Color.GRAY);
-        expensesTable.setRowHeight(30);
-        expensesTable.setAutoCreateRowSorter(true);
-        expensesScrollPane.setBounds(260, 180, 1000, 450);
+        reportTableDesign(expensesTable, expensesScrollPane);
 
         totalLabel = new JLabel("TOTAL : ");
         totalLabel.setBounds(850, 670, 150, 50);
@@ -164,7 +142,7 @@ public class Report {
                 setSummaryInfoVisibility(false);
                 setVisibilityTotal(true);
                 totalTextField.setEditable(false);
-                showReportLabel(head, "SALES REPORT");
+                showReportLabel( "SALES REPORT");
 
             }
         });
@@ -190,7 +168,7 @@ public class Report {
                 totalTextField.setText(String.valueOf(getTotalBuy()));
                 totalTextField.setEditable(false);
                 setVisibilityTotal(true);
-                showReportLabel(head, "PURCHASE REPORT");
+                showReportLabel("PURCHASE REPORT");
 
 
             }
@@ -216,7 +194,7 @@ public class Report {
                 panel.add(totalLabel);
                 totalTextField.setText(String.valueOf(getTotalPayBill()));
                 setVisibilityTotal(true);
-                showReportLabel(head, "EXPENSE REPORT");
+                showReportLabel( "EXPENSE REPORT");
 
                 totalTextField.setEditable(false);
                 setSummaryInfoVisibility(false);
@@ -236,7 +214,7 @@ public class Report {
                 panel.remove(buyScrollPane);
                 panel.remove(salesScrollPane);
                 setSummaryInfoVisibility(true);
-                showReportLabel(head, "SUMMARY");
+                showReportLabel("SUMMARY");
                 setVisibilityTotal(false);
                 panel.updateUI();
                 summaryYearComboFillUp();
@@ -270,11 +248,7 @@ public class Report {
         panel.add(yearComboBox);
 
         frame.add(panel);
-        frame.setAlwaysOnTop(true);
-        frame.setResizable(false);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("Report");
+
 
 
         return panel;
@@ -282,9 +256,17 @@ public class Report {
 
     }
 
-    private void showReportLabel(JLabel Label, String s) {
-        head.setForeground(Color.white);
+    private void reportTableDesign(JTable jTable, JScrollPane jScrollPane) {
+        jTable.setFont(f1);
+        jTable.setBackground(Color.WHITE);
+        jTable.setSelectionBackground(Color.GRAY);
+        jTable.setRowHeight(30);
+        jTable.setAutoCreateRowSorter(true);
+        jScrollPane.setBounds(260, 180, 1000, 450);
+    }
 
+    private void showReportLabel( String s) {
+        head.setForeground(Color.white);
         head.setText(s);
 
     }
