@@ -45,11 +45,11 @@ public class CreateInvoice {
     LoginPage loginPage;
     private JLabel netTotalLabel;
     private JTextField netTotalTextField;
-BackgroundColor backgroundColor;
+    BackgroundColor backgroundColor;
 
     public CreateInvoice(JFrame frame) {
         this.frame = frame;
-        backgroundColor =new BackgroundColor(frame);
+        backgroundColor = new BackgroundColor(frame);
         initComponents();
 
     }
@@ -149,21 +149,22 @@ BackgroundColor backgroundColor;
                         Document document = new Document();
                         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File(chooser.getSelectedFile(), "Invoice.pdf")));
                         document.open();
-                        String company_Name = null,companyAddress = null,contactNumber = null;
+                        String company_Name = null, companyAddress = null, contactNumber = null;
 
                         try {
-                            String sql="select * from company_info";
-                            OracleConnection oc=new OracleConnection();
-                            PreparedStatement ps=oc.conn.prepareStatement(sql);
-                            ResultSet rs=ps.executeQuery();
-                            while (rs.next()){
-                                company_Name=rs.getString(1);
-                                companyAddress=rs.getString(2);
-                                contactNumber=rs.getString(3);
+                            String sql = "select * from company_info";
+                            OracleConnection oc = new OracleConnection();
+                            PreparedStatement ps = oc.conn.prepareStatement(sql);
+                            ResultSet rs = ps.executeQuery();
+                            while (rs.next()) {
+                                company_Name = rs.getString(1);
+                                companyAddress = rs.getString(2);
+                                contactNumber = rs.getString(3);
                             }
 
                         } catch (SQLException throwables) {
-                            System.out.println(throwables+" create invoice company info");                        }
+                            System.out.println(throwables + " create invoice company info");
+                        }
 
                         Paragraph companyName = new Paragraph(company_Name);
                         Paragraph address = new Paragraph(companyAddress);
@@ -314,7 +315,8 @@ BackgroundColor backgroundColor;
         invback.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Dashboard(frame);
+                Dashboard dashboard = new Dashboard(frame);
+                dashboard.tabbedPane.setSelectedIndex(2);
                 mainpanel.setVisible(false);
             }
         });
@@ -354,7 +356,7 @@ BackgroundColor backgroundColor;
         netTotalLabel = new JLabel("Net Total : ");
         netTotalLabel.setBounds(800, 660, 150, 50);
         netTotalLabel.setToolTipText("Enter password");
-      labelPanelAdd(netTotalLabel);
+        labelPanelAdd(netTotalLabel);
 
         netTotalTextField = new JTextField();
         netTotalTextField.setBounds(950, 670, 200, 30);
@@ -366,7 +368,7 @@ BackgroundColor backgroundColor;
         frame.add(mainpanel);
 
 
-      backgroundColor.setScreenSize(frame);
+        backgroundColor.setScreenSize(frame);
 
     }
 
@@ -392,53 +394,53 @@ BackgroundColor backgroundColor;
     }
 
     private void setSellerName() {
-        try{
-            String sql="select name from users where u_id='"+loginPage.getUID()+"'";
-            OracleConnection oc=new OracleConnection();
-            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
-            ResultSet rs=preparedStatement.executeQuery();
-            while (rs.next()){
+        try {
+            String sql = "select name from users where u_id='" + loginPage.getUID() + "'";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
 
                 invoiceGeneratorCreatedByTextField.setText(rs.getString(1));
             }
 
         } catch (Exception e) {
-            System.out.println(e+"  setSellerName");
+            System.out.println(e + "  setSellerName");
         }
     }
 
     private void setCompanyName() {
-        try{
-            String sql="select name from company_info";
-            OracleConnection oc=new OracleConnection();
-            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
-            ResultSet rs=preparedStatement.executeQuery();
-            while (rs.next()){
+        try {
+            String sql = "select name from company_info";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
 
                 companyNameTextField.setText(rs.getString(1));
             }
 
         } catch (Exception e) {
-            System.out.println(e+"  setCompanyName");
+            System.out.println(e + "  setCompanyName");
         }
     }
 
     private void setNetTotalValue() {
-        try{
-            String sql="select sum(mrp*p_quantity) from supply_order,sales_details,sales,product " +
-                            "where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id " +
-                                "and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
-            OracleConnection oc=new OracleConnection();
-            PreparedStatement preparedStatement=oc.conn.prepareStatement(sql);
-            ResultSet rs=preparedStatement.executeQuery();
-            while (rs.next()){
+        try {
+            String sql = "select sum(mrp*p_quantity) from supply_order,sales_details,sales,product " +
+                    "where sales.sale_id=sales_details.sale_id and sales_details.p_id=product.p_id " +
+                    "and product.s_id=supply_order.s_id and sales.sale_id=(select max(sale_id) from sales)";
+            OracleConnection oc = new OracleConnection();
+            PreparedStatement preparedStatement = oc.conn.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
 
                 netTotalTextField.setText(rs.getString(1));
                 //   System.out.println(loginPage.getUID()+" opop");
             }
 
         } catch (Exception e) {
-            System.out.println(e+"  invoice serial");
+            System.out.println(e + "  invoice serial");
         }
     }
 

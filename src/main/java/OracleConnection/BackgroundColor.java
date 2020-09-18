@@ -17,8 +17,8 @@ public class BackgroundColor {
                 if (g instanceof Graphics2D) {
 
                     Paint p =
-                            new GradientPaint(0.0f, 0.0f, new Color(85,107,47, 255),
-                                    getWidth(), getHeight(), new Color(0x94E772), true);
+                            new GradientPaint(0.0f, 0.0f, new Color(0xFFFFFF),
+                                    getWidth(), getHeight(), new Color(100, 161, 236, 255), true);
                     Graphics2D g2d = (Graphics2D) g;
                     g2d.setPaint(p);
                     g2d.fillRect(0, 0, getWidth(), getHeight());
@@ -30,7 +30,7 @@ public class BackgroundColor {
     }
 
     public void setButtonColor(JButton button) {
-        button.setBackground(new Color(61, 78, 33, 255));
+        button.setBackground(new Color(34, 97, 224, 255));
         button.setForeground(Color.white);
     }
 

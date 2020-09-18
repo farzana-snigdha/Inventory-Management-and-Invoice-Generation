@@ -96,11 +96,7 @@ public class LoginPage {
             }
         });
         panel.add(loginButton);
-
-
         frame.add(panel);
-
-
         backgroundColor.setScreenSize(frame);
     }
 

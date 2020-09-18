@@ -76,17 +76,12 @@ public class ProductEntry {
                     ps1.setInt(1, Integer.parseInt(tfProductId.getText()));
                     ps1.setString(2, tfProductName.getText());
                     ps1.setString(3, tfProductName.getText());
-                    int x = ps1.executeUpdate();
-
-//                    oc.conn.commit();
+                    ps1.executeUpdate();
 
                     resetTextFields();
 
-                    if (x < 0) {
-
-                        JOptionPane.showMessageDialog(frame, "input valid info");
-                    }
                 } catch (Exception d) {
+                    JOptionPane.showMessageDialog(frame, "Product ID Already Exists");
                     System.out.println(d);
                 }
             }
@@ -94,8 +89,6 @@ public class ProductEntry {
         panel.add(addButton);
 
         frame.add(panel);
-
-
         backgroundColor.setScreenSize(frame);
 
     }
@@ -103,7 +96,6 @@ public class ProductEntry {
     private void resetTextFields() {
         tfProductId.setText("");
         tfProductName.setText("");
-
         tfProductId.requestFocus();
     }
 

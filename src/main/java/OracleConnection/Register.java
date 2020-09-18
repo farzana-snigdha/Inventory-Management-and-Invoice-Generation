@@ -197,7 +197,7 @@ public class Register {
                                 ps2.setString(3,contactNumberTextField.getText().trim());
 
                                 ps2.executeUpdate();
-                                System.out.println("bbbb");
+                          //      System.out.println("bbbb");
                             }
                             if (count == 0) {
                                 ps.setInt(5, Integer.parseInt(tfDesignationId.getText().trim()));

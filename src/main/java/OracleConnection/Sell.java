@@ -178,7 +178,6 @@ public class Sell {
             invoiceButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //save data in db
                     try {
 
                         OracleConnection oc1 = new OracleConnection();
@@ -225,10 +224,12 @@ public class Sell {
 
                         {
                             //qty minus
-                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY-? WHERE S_NAME = ? and  (select sum(S_QUANTITY) from supply_order where s_name=? having sum(S_QUANTITY) > 0 )> 0 and s_id=(select max(s_id) from supply_order where s_name=? and S_QUANTITY > 0 )";
+                            String sql3 = "UPDATE SUPPLY_ORDER SET S_QUANTITY = S_QUANTITY-? WHERE S_NAME = ? and" +
+                                    "  (select sum(S_QUANTITY) from supply_order where s_name=? having sum(S_QUANTITY) > 0 )> 0 " +
+                                    "and s_id=(select max(s_id) from supply_order where s_name=? and S_QUANTITY > 0 )";
                             OracleConnection oc3 = new OracleConnection();
                             PreparedStatement ps3 = oc3.conn.prepareStatement(sql3);
-                            String qty = "";
+                            String qty ;
                             for (int i = 0; i < sellTable.getRowCount(); i++) {
                                 String name = sellTable.getValueAt(i, 0).toString();
                                 qty = sellTable.getValueAt(i, 3).toString();
@@ -240,7 +241,6 @@ public class Sell {
                                 ps3.executeUpdate();
                             }
                             ps3.addBatch();
-                            inv.updateInventoryTable();
                         }
 
 

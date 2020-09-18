@@ -35,7 +35,6 @@ BackgroundColor backgroundColor;
         backgroundColor =new BackgroundColor(frame);
 
         initComponents(Panel);
- //       updateInventoryTable();
     }
 
     public JPanel initComponents(final JPanel mainPanel) {
@@ -84,7 +83,7 @@ BackgroundColor backgroundColor;
 
 
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(frame,"Selected Product Is Sold At Least Once \n It Cannot Be Deleted ");
+                        JOptionPane.showMessageDialog(frame,"Selected Product Is Sold At Least Once \nIt Cannot Be Deleted ");
                         System.out.println(ex + " inventory delete");
                     }
                 }

@@ -52,7 +52,7 @@ public class Report {
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(0x77A033));
+        panel.setBackground(new Color(0x93B3EE));
 
         f1 = new Font("Arial", Font.BOLD, 15);
         f2 = new Font("Arial", Font.PLAIN, 18);
@@ -249,8 +249,6 @@ public class Report {
 
         frame.add(panel);
 
-
-
         return panel;
 
 
@@ -343,14 +341,14 @@ public class Report {
 
         try {
             int monthNumber = getMonthNumber();
-            int yearName = Integer.parseInt(yearComboBox.getSelectedItem().toString());
+            int year = Integer.parseInt(yearComboBox.getSelectedItem().toString());
 
 
             OracleConnection oc = new OracleConnection();
             String sql = "select S.SALE_DATE ,SO.S_NAME , USERS.NAME,sum(SD.P_QUANTITY), SO.MRP,sum(SD.P_QUANTITY*SO.MRP) AS TOTAL " +
                     "FROM SALES S,USERS,SUPPLY_ORDER SO,PRODUCT,SALES_DETAILS SD " +
                     "where S.U_ID=USERS.U_ID AND S.SALE_ID = SD.SALE_ID AND SD.P_ID =PRODUCT.P_ID " +
-                    "AND PRODUCT.S_ID=SO.S_ID AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + yearName +
+                    "AND PRODUCT.S_ID=SO.S_ID AND extract (year from to_date(SALE_DATE,'dd-mon-yy'))='" + year +
                     "' AND extract (month from to_date(SALE_DATE,'yyyy-month-dd'))='" + monthNumber +
                     "' GROUP BY S.SALE_DATE ,SO.S_NAME , USERS.NAME, SO.MRP" +
                     " ORDER BY S.SALE_DATE ,SO.S_NAME";
@@ -450,7 +448,6 @@ public class Report {
             ResultSet rs2 = ps2.executeQuery();
             while (rs2.next()) {
                 totalBuy = rs2.getInt(1);
-
             }
         } catch (Exception e) {
             System.out.println(e + "  getTotalBuy");

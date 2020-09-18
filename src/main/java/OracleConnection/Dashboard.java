@@ -22,7 +22,7 @@ public class Dashboard {
 
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        mainPanel.setBackground(new Color(0x556B2F));
+        mainPanel.setBackground(new Color(0x5085E3));
 
         f1 = new Font("Arial", Font.PLAIN, 20);
         f2 = new Font("Arial", Font.BOLD, 11);
@@ -38,7 +38,7 @@ public class Dashboard {
         tabbedPane.setBounds(0, 0, xsize, ysize);
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         tabbedPane.setFont(f1);
-        tabbedPane.setBackground(new Color(0x77A033));
+        tabbedPane.setBackground(new Color(0x9DC9F5));
         mainPanel.add(tabbedPane);
 
         final Inventory inventory = new Inventory(frame);
