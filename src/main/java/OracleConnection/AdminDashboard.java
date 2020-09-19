@@ -43,7 +43,7 @@ public class AdminDashboard {
         Inventory inventory = new Inventory(frame);
         Paybills paybills = new Paybills(frame);
         Report report = new Report(frame);
-        Salary salary =new Salary(frame);
+        final Salary salary =new Salary(frame);
         final Register register=new Register(frame);
    /*     logOutPanel= new JPanel();
         logOutPanel.setLayout(null);
@@ -65,6 +65,10 @@ public class AdminDashboard {
                 if(tabbedPane.getSelectedIndex()==4){
                     register.chooseDesignation();
                 }
+                else if(tabbedPane.getSelectedIndex()==2){
+                    salary.designationInfoTable();
+                }
+
                 else if(tabbedPane.getSelectedIndex()==5){
                     int warningMsg = JOptionPane.showConfirmDialog(frame, "Do you want to Logout?", "Logout", JOptionPane.YES_NO_OPTION);
                     if(warningMsg==JOptionPane.YES_OPTION){
