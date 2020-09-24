@@ -17,7 +17,7 @@ public class Inventory {
     private Font f1, f2;
     private JButton inventoryDeleteButton;
 
-BackgroundColor backgroundColor;
+    BackgroundColor backgroundColor;
     private JTable inventoryTable;
     private DefaultTableModel inventoryModel;
     private JScrollPane inventoryScrollPane;
@@ -29,10 +29,9 @@ BackgroundColor backgroundColor;
     ResultSet rs;
 
 
-
     public Inventory(JFrame frame) {
         this.frame = frame;
-        backgroundColor =new BackgroundColor(frame);
+        backgroundColor = new BackgroundColor(frame);
 
         initComponents(Panel);
     }
@@ -83,7 +82,7 @@ BackgroundColor backgroundColor;
 
 
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(frame,"Selected Product Is Sold At Least Once \nIt Cannot Be Deleted ");
+                        JOptionPane.showMessageDialog(frame, "Selected Product Is Sold At Least Once \nIt Cannot Be Deleted ");
                         System.out.println(ex + " inventory delete");
                     }
                 }
@@ -97,12 +96,7 @@ BackgroundColor backgroundColor;
         inventoryScrollPane = new JScrollPane(inventoryTable);
         inventoryModel.setColumnIdentifiers(inventoryColumns);
         inventoryTable.setModel(inventoryModel);
-        inventoryTable.setFont(f1);
-        inventoryTable.setBackground(Color.WHITE);
-        inventoryTable.setSelectionBackground(Color.GRAY);
-        inventoryTable.setRowHeight(30);
-        inventoryTable.setAutoCreateRowSorter(true);
-
+        backgroundColor.setTableDesign(inventoryTable, f1);
         inventoryScrollPane.setBounds(150, 350, 1000, 300);
         panelInventory.add(inventoryScrollPane);
 
@@ -144,7 +138,6 @@ BackgroundColor backgroundColor;
             System.out.println(e + " table_update_inventory");
         }
     }
-
 
 
 }

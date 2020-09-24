@@ -41,7 +41,7 @@ public class AdminDashboard {
         mainPanel.add(tabbedPane);
 
         Inventory inventory = new Inventory(frame);
-        Paybills paybills = new Paybills(frame);
+        final Paybills paybills = new Paybills(frame);
         Report report = new Report(frame);
         final Salary salary =new Salary(frame);
         final Register register=new Register(frame);
@@ -67,6 +67,9 @@ public class AdminDashboard {
                 }
                 else if(tabbedPane.getSelectedIndex()==2){
                     salary.designationInfoTable();
+                }
+                else if(tabbedPane.getSelectedIndex()==1){
+                    paybills.setAutoExpenseId();
                 }
 
                 else if(tabbedPane.getSelectedIndex()==5){
